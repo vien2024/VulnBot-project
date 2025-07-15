@@ -40,13 +40,13 @@ class KBService(ABC):
 
     def save_vector_store(self):
         """
-        保存向量库:FAISS保存到磁盘，milvus保存到数据库。PGVector暂未支持
+        Save vector store: FAISS saves to disk, Milvus saves to database. PGVector is not supported yet
         """
         pass
 
     def create_kb(self):
         """
-        创建知识库
+        Create knowledge base
         """
         if not os.path.exists(self.doc_path):
             os.makedirs(self.doc_path)
@@ -61,7 +61,7 @@ class KBService(ABC):
 
     def clear_vs(self):
         """
-        删除向量库中所有内容
+        Clear all contents in vector store
         """
         self.do_clear_vs()
         status = delete_files_from_db(self.kb_name)
@@ -69,7 +69,7 @@ class KBService(ABC):
 
     def drop_kb(self):
         """
-        删除知识库
+        Drop knowledge base
         """
         self.do_drop_kb()
         status = delete_kb_from_db(self.kb_name)
@@ -77,8 +77,8 @@ class KBService(ABC):
 
     def add_doc(self, kb_file: KnowledgeFile, docs: List[Document] = [], **kwargs):
         """
-        向知识库添加文件
-        如果指定了docs，则不再将文本向量化，并将数据库对应条目标为custom_docs=True
+        Add file to knowledge base
+        If docs are specified, the text will not be vectorized, and the database corresponding entry will be marked as custom_docs=True
         """
 
         if docs:
@@ -116,7 +116,7 @@ class KBService(ABC):
             self, kb_file: KnowledgeFile, delete_content: bool = False, **kwargs
     ):
         """
-        从知识库删除文件
+        Delete file from knowledge base
         """
         self.do_delete_doc(kb_file, **kwargs)
         status = delete_file_from_db(kb_file)
@@ -126,7 +126,7 @@ class KBService(ABC):
 
     def update_info(self, kb_info: str):
         """
-        更新知识库介绍
+        Update knowledge base description
         """
         self.kb_info = kb_info
         status = add_kb_to_db(
@@ -136,8 +136,8 @@ class KBService(ABC):
 
     def update_doc(self, kb_file: KnowledgeFile, docs: List[Document] = [], **kwargs):
         """
-        使用content中的文件更新向量库
-        如果指定了docs，则使用自定义docs，并将数据库对应条目标为custom_docs=True
+        Use the file in content to update the vector store
+        If docs are specified, use custom docs, and mark the database corresponding entry as custom_docs=True
         """
 
         if os.path.exists(kb_file.filepath):
@@ -173,8 +173,8 @@ class KBService(ABC):
 
     def update_doc_by_ids(self, docs: Dict[str, Document]) -> bool:
         """
-        传入参数为： {doc_id: Document, ...}
-        如果对应 doc_id 的值为 None，或其 page_content 为空，则删除该文档
+        Input parameters: {doc_id: Document, ...}
+        If the value corresponding to doc_id is None, or its page_content is empty, delete the document
         """
         self.del_doc_by_ids(list(docs.keys()))
         pending_docs = []
@@ -191,7 +191,7 @@ class KBService(ABC):
             self, file_name: str = None, metadata: Dict = {}
     ) -> List[MatchDocument]:
         """
-        通过file_name或metadata检索Document
+        Retrieve Document by file_name or metadata
         """
         doc_infos = list_docs_from_db(
             kb_name=self.kb_name, file_name=file_name, metadata=metadata
@@ -200,12 +200,12 @@ class KBService(ABC):
         for x in doc_infos:
             doc_info = self.get_doc_by_ids([x["id"]])[0]
             if doc_info is not None:
-                # 处理非空的情况
+                # Handle non-empty cases
                 doc_with_id = MatchDocument(**{**doc_info.dict(), "id":x["id"]})
                 docs.append(doc_with_id)
             else:
-                # 处理空的情况
-                # 可以选择跳过当前循环迭代或执行其他操作
+                # Handle empty cases
+                # You can choose to skip the current iteration or perform other operations
                 pass
         return docs
 
@@ -213,7 +213,7 @@ class KBService(ABC):
     @abstractmethod
     def do_create_kb(self):
         """
-        创建知识库子类实自己逻辑
+        Create knowledge base
         """
         pass
 
@@ -236,7 +236,7 @@ class KBService(ABC):
     @abstractmethod
     def do_drop_kb(self):
         """
-        删除知识库子类实自己逻辑
+        Drop knowledge base
         """
         pass
 
@@ -248,7 +248,7 @@ class KBService(ABC):
             score_threshold: float,
     ) -> List[Tuple[Document, float]]:
         """
-        搜索知识库子类实自己逻辑
+        Search knowledge base
         """
         pass
 
@@ -259,21 +259,21 @@ class KBService(ABC):
             **kwargs,
     ) -> List[Dict]:
         """
-        向知识库添加文档子类实自己逻辑
+        Add document to knowledge base
         """
         pass
 
     @abstractmethod
     def do_delete_doc(self, kb_file: KnowledgeFile):
         """
-        从知识库删除文档子类实自己逻辑
+        Delete document from knowledge base
         """
         pass
 
     @abstractmethod
     def do_clear_vs(self):
         """
-        从知识库删除全部向量子类实自己逻辑
+        Clear all contents in vector store
         """
         pass
 

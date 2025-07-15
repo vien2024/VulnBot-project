@@ -89,7 +89,7 @@ def import_tasks_from_json(plan_id: str, tasks_json: List[Dict]) -> List[TaskMod
 
 
 def merge_tasks_from_json(plan_id: str, new_tasks_json: List[Dict], old_tasks: List[Task]) -> List[Task]:
-    # 获取所有已完成且成功的任务
+    # Get all completed and successful tasks
     completed_tasks_map = {
         task.instruction: task
         for task in old_tasks

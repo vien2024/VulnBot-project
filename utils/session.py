@@ -18,7 +18,7 @@ Base: DeclarativeMeta = declarative_base()
 
 @contextmanager
 def session_scope() -> Session:
-    """上下文管理器用于自动获取 Session, 避免错误"""
+    """Context manager used to automatically get Session, avoid errors"""
     session = SessionLocal()
     try:
         yield session

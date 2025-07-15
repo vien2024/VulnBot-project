@@ -1,3 +1,4 @@
+# TODO: REMOVE NON-WEB
 from typing import ClassVar
 
 from prompts.collector_prompt import CollectorPrompt

@@ -20,7 +20,7 @@ logger = build_logger()
 
 
 def validate_kb_name(knowledge_base_id: str) -> bool:
-    # 检查是否包含预期外的字符或路径攻击关键字
+    # Check for unexpected characters or path attack keywords
     if "../" in knowledge_base_id:
         return False
     return True
@@ -76,7 +76,7 @@ def list_files_from_folder(kb_name: str):
         elif entry.is_file():
             file_path = Path(
                 os.path.relpath(entry.path, doc_path)
-            ).as_posix()  # 路径统一为 posix 格式
+            ).as_posix()  # Path统一为posix格式
             result.append(file_path)
         elif entry.is_dir():
             with os.scandir(entry.path) as it:
@@ -160,7 +160,7 @@ def get_LoaderClass(file_extension):
 
 def get_loader(loader_name: str, file_path: str, loader_kwargs: Dict = None):
     """
-    根据loader_name和文件路径或内容返回文档加载器。
+    Get a document loader based on the loader name and file path or content.
     """
     loader_kwargs = loader_kwargs or {}
     try:
@@ -180,7 +180,7 @@ def get_loader(loader_name: str, file_path: str, loader_kwargs: Dict = None):
             )
         DocumentLoader = getattr(document_loaders_module, loader_name)
     except Exception as e:
-        msg = f"为文件{file_path}查找加载器{loader_name}时出错：{e}"
+        msg = f"Failed to find loader {loader_name} for file {file_path}: {e}"
         logger.error(f"{e.__class__.__name__}: {msg}")
         document_loaders_module = importlib.import_module(
             "langchain_unstructured"
@@ -191,7 +191,7 @@ def get_loader(loader_name: str, file_path: str, loader_kwargs: Dict = None):
         loader_kwargs.setdefault("autodetect_encoding", True)
     elif loader_name == "CSVLoader":
         if not loader_kwargs.get("encoding"):
-            # 如果未指定 encoding，自动识别文件编码类型，避免langchain loader 加载文件报编码错误
+            # If encoding is not specified, automatically identify the file encoding type to avoid encoding errors when loading files with langchain loader
             with open(file_path, "rb") as struct_file:
                 encode_detect = chardet.detect(struct_file.read())
             if encode_detect is None:
@@ -212,7 +212,7 @@ def get_loader(loader_name: str, file_path: str, loader_kwargs: Dict = None):
 @lru_cache()
 def make_text_splitter(splitter_name, chunk_size, chunk_overlap):
     """
-    根据参数获取特定的分词器
+    Get a specific text splitter based on the parameters.
     """
     splitter_name = splitter_name or "SpacyTextSplitter"
     try:
@@ -223,7 +223,7 @@ def make_text_splitter(splitter_name, chunk_size, chunk_overlap):
 
             if (
                     Configs.kb_config.text_splitter_dict[splitter_name]["source"] == "tiktoken"
-            ):  # 从tiktoken加载
+            ):  # Load from tiktoken
                 try:
                     text_splitter = TextSplitter.from_tiktoken_encoder(
                         encoding_name=Configs.kb_config.text_splitter_dict[splitter_name][
@@ -243,16 +243,16 @@ def make_text_splitter(splitter_name, chunk_size, chunk_overlap):
                     )
             elif (
                     Configs.kb_config.text_splitter_dict[splitter_name]["source"] == "huggingface"
-            ):  # 从huggingface加载
+            ):  # Load from huggingface
                 if (
                         Configs.kb_config.text_splitter_dict[splitter_name]["tokenizer_name_or_path"]
                         == "gpt2"
                 ):
-                    from langchain.text_splitter import CharacterTextSplitter
+                    from langchain.text_splitter import CharacterTextSplitter   
                     from transformers import GPT2TokenizerFast
 
                     tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
-                else:  # 字符长度加载
+                else:  # Character length loading
                     from transformers import AutoTokenizer
 
                     tokenizer = AutoTokenizer.from_pretrained(
@@ -283,13 +283,13 @@ class KnowledgeFile:
             loader_kwargs: Dict = {},
     ):
         """
-        对应知识库目录中的文件，必须是磁盘上存在的才能进行向量化等操作。
+        Corresponding knowledge base directory file, must exist on disk to perform vectorization and other operations.
         """
         self.kb_name = knowledge_base_name
         self.filename = str(Path(filename).as_posix())
         self.ext = os.path.splitext(filename)[-1].lower()
         if self.ext not in SUPPORTED_EXTS:
-            raise ValueError(f"暂未支持的文件格式 {self.filename}")
+            raise ValueError(f"Unsupported file format {self.filename}")
         self.loader_kwargs = loader_kwargs
         self.filepath = get_file_path(knowledge_base_name, filename)
         self.docs = None
@@ -335,7 +335,7 @@ class KnowledgeFile:
         if not docs:
             return []
 
-        print(f"文档切分示例：{docs[0]}")
+        print(f"Document split example: {docs[0]}")
         self.splited_docs = docs
         return self.splited_docs
 
@@ -373,7 +373,7 @@ def files2docs_in_thread_file2docs(
     try:
         return True, (file.kb_name, file.filename, file.file2text(**kwargs))
     except Exception as e:
-        msg = f"从文件 {file.kb_name}/{file.filename} 加载文档时出错：{e}"
+        msg = f"Failed to load document from file {file.kb_name}/{file.filename}: {e}"
         logger.error(f"{e.__class__.__name__}: {msg}")
         return False, (file.kb_name, file.filename, msg)
 
@@ -384,9 +384,9 @@ def files2docs_in_thread(
         chunk_overlap: int = Configs.kb_config.overlap_size,
 ) -> Generator:
     """
-    利用多线程批量将磁盘文件转化成langchain Document.
-    如果传入参数是Tuple，形式为(filename, kb_name)
-    生成器返回值为 status, (kb_name, file_name, docs | error)
+    Utilize multi-threading to batch convert disk files into langchain Document.
+    If the input parameter is Tuple, the form is (filename, kb_name)
+    Generator returns status, (kb_name, file_name, docs | error)
     """
 
     kwargs_list = []
@@ -421,8 +421,8 @@ def run_in_thread_pool(
         params: List[Dict] = [],
 ) -> Generator:
     """
-    在线程池中批量运行任务，并将运行结果以生成器的形式返回。
-    请确保任务中的所有操作是线程安全的，任务函数请全部使用关键字参数。
+    Run tasks in thread pool and return results as a generator.
+    Please ensure that all operations in the task are thread-safe and that the task function uses keyword arguments.
     """
     tasks = []
     with ThreadPoolExecutor() as pool:

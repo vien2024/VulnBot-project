@@ -62,7 +62,7 @@ def knowledge_base_page(api: ApiRequest):
     except Exception as e:
         logger.error(e)
         st.error(
-            "获取知识库信息错误，请检查是否为数据库连接错误。"
+            "Failed to get knowledge base information, please check if the database connection is correct."
         )
         st.stop()
     kb_names = list(kb_list.keys())
@@ -85,22 +85,22 @@ def knowledge_base_page(api: ApiRequest):
             return kb_name
 
     selected_kb = st.selectbox(
-        "请选择或新建知识库：",
-        kb_names + ["新建知识库"],
+        "Select or create knowledge base:",
+        kb_names + ["New knowledge base"],
         format_func=format_selected_kb,
         index=selected_kb_index,
     )
 
-    if selected_kb == "新建知识库":
-        with st.form("新建知识库"):
+    if selected_kb == "New knowledge base":
+        with st.form("New knowledge base"):
             kb_name = st.text_input(
-                "新建知识库名称",
-                placeholder="新知识库名称，不支持中文命名",
+                "New knowledge base name",
+                placeholder="New knowledge base name, do not support Chinese naming",
                 key="kb_name",
             )
             kb_info = st.text_input(
-                "知识库简介",
-                placeholder="知识库简介，方便Agent查找",
+                "Knowledge base description",
+                placeholder="Knowledge base description,to make it easier for the Agent to retrieve",
                 key="kb_info",
             )
 
@@ -108,7 +108,7 @@ def knowledge_base_page(api: ApiRequest):
 
             vs_types = list([Configs.kb_config.default_vs_type])
             vs_type = col0.selectbox(
-                "向量库类型",
+                "Vector store type",
                 vs_types,
                 index=vs_types.index(Configs.kb_config.default_vs_type),
                 key="vs_type",
@@ -118,21 +118,21 @@ def knowledge_base_page(api: ApiRequest):
             with col1:
                 embed_models = list([Configs.llm_config.embedding_models])
                 index = 0
-                embed_model = st.selectbox("Embeddings模型", embed_models, index)
+                embed_model = st.selectbox("Embeddings model", embed_models, index)
 
             submit_create_kb = st.form_submit_button(
-                "新建",
+                "New",
                 # disabled=not bool(kb_name),
                 use_container_width=True,
             )
 
         if submit_create_kb:
             if not kb_name or not kb_name.strip():
-                st.error(f"知识库名称不能为空！")
+                st.error(f"Knowledge base name cannot be empty!")
             elif kb_name in kb_list:
-                st.error(f"名为 {kb_name} 的知识库已经存在！")
+                st.error(f"Knowledge base named {kb_name} already exists!")
             elif embed_model is None:
-                st.error(f"请选择Embedding模型！")
+                st.error(f"Please select an Embedding model!")
             else:
                 ret = api.create_knowledge_base(
                     knowledge_base_name=kb_name,
@@ -147,14 +147,14 @@ def knowledge_base_page(api: ApiRequest):
     elif selected_kb:
         kb = selected_kb
         st.session_state["selected_kb_info"] = kb_list[kb]["kb_info"]
-        # 上传文件
+        # Upload files
         files = st.file_uploader(
-            "上传知识文件：",
+            "Upload Knowledge File:",
             [i for ls in LOADER_DICT.values() for i in ls],
             accept_multiple_files=True,
         )
         kb_info = st.text_area(
-            "请输入知识库介绍:",
+            "Please enter the knowledge base description:",
             value=st.session_state["selected_kb_info"],
             max_chars=None,
             key=None,
@@ -170,18 +170,18 @@ def knowledge_base_page(api: ApiRequest):
 
         # with st.sidebar:
         with st.expander(
-            "文件处理配置",
+            "File processing configuration",
             expanded=True,
         ):
             cols = st.columns(3)
-            chunk_size = cols[0].number_input("单段文本最大长度：", 1, 1000, Configs.kb_config.chunk_size)
+            chunk_size = cols[0].number_input("Single text maximum length", 1, 1000, Configs.kb_config.chunk_size)
             chunk_overlap = cols[1].number_input(
-                "相邻文本重合长度：", 0, chunk_size, Configs.kb_config.overlap_size
+                "Adjacent text overlap length", 0, chunk_size, Configs.kb_config.overlap_size
             )
 
 
         if st.button(
-            "添加文件到知识库",
+            "Add files to knowledge base",
             # use_container_width=True,
             disabled=len(files) == 0,
         ):
@@ -199,15 +199,15 @@ def knowledge_base_page(api: ApiRequest):
 
         st.divider()
 
-        # 知识库详情
+        # Knowledge base details
         # st.info("请选择文件，点击按钮进行操作。")
         doc_details = pd.DataFrame(get_kb_file_details(kb))
         selected_rows = []
         if not len(doc_details):
-            st.info(f"知识库 `{kb}` 中暂无文件")
+            st.info(f"Knowledge base `{kb}` has no files")
         else:
-            st.write(f"知识库 `{kb}` 中已有文件:")
-            st.info("知识库中包含源文件与向量库，请从下表中选择文件后操作")
+            st.write(f"Knowledge base `{kb}` has files:")
+            st.info("Knowledge base contains source files and vector store, please select files from the table below to perform operations")
             doc_details.drop(columns=["kb_name"], inplace=True)
             doc_details = doc_details[
                 [
@@ -229,16 +229,16 @@ def knowledge_base_page(api: ApiRequest):
             gb = config_aggrid(
                 doc_details,
                 {
-                    ("No", "序号"): {},
-                    ("file_name", "文档名称"): {},
-                    # ("file_ext", "文档类型"): {},
-                    # ("file_version", "文档版本"): {},
-                    ("document_loader", "文档加载器"): {},
-                    ("docs_count", "文档数量"): {},
-                    ("text_splitter", "分词器"): {},
-                    # ("create_time", "创建时间"): {},
-                    ("in_folder", "源文件"): {},
-                    ("in_db", "向量库"): {},
+                    ("No", "Number"): {},
+                    ("file_name", "Document name"): {},
+                    # ("file_ext", "Document type"): {},
+                    # ("file_version", "Document version"): {},
+                    ("document_loader", "Document loader"): {},
+                    ("docs_count", "Document count"): {},
+                    ("text_splitter", "Text splitter"): {},
+                    # ("create_time", "Create time"): {},
+                    ("in_folder", "Source file"): {},
+                    ("in_db", "Vector store"): {},
                 },
                 "multiple",
             )
@@ -265,14 +265,14 @@ def knowledge_base_page(api: ApiRequest):
             if file_path:
                 with open(file_path, "rb") as fp:
                     cols[0].download_button(
-                        "下载选中文档",
+                        "Download selected document",
                         fp,
                         file_name=file_name,
                         use_container_width=True,
                     )
             else:
                 cols[0].download_button(
-                    "下载选中文档",
+                    "Download selected document",
                     "",
                     disabled=True,
                     use_container_width=True,
@@ -281,9 +281,9 @@ def knowledge_base_page(api: ApiRequest):
             st.write()
             # 将文件分词并加载到向量库中
             if cols[1].button(
-                "重新添加至向量库"
+                "Re-add to vector store"
                 if selected_rows and (pd.DataFrame(selected_rows)["in_db"]).any()
-                else "添加至向量库",
+                else "Add to vector store",
                 disabled=not file_exists(kb, selected_rows)[0],
                 use_container_width=True,
             ):
@@ -298,7 +298,7 @@ def knowledge_base_page(api: ApiRequest):
 
             # 将文件从向量库中删除，但不删除文件本身。
             if cols[2].button(
-                "从向量库删除",
+                "Delete from vector store",
                 disabled=not (selected_rows and selected_rows[0]["in_db"]),
                 use_container_width=True,
             ):
@@ -307,7 +307,7 @@ def knowledge_base_page(api: ApiRequest):
                 st.rerun()
 
             if cols[3].button(
-                "从知识库中删除",
+                "Delete from knowledge base",
                 type="primary",
                 use_container_width=True,
             ):
@@ -320,7 +320,7 @@ def knowledge_base_page(api: ApiRequest):
         cols = st.columns(3)
 
         if cols[1].button(
-            "删除知识库",
+            "Delete knowledge base",
             use_container_width=True,
         ):
             ret = api.delete_knowledge_base(kb)
@@ -329,7 +329,7 @@ def knowledge_base_page(api: ApiRequest):
             st.rerun()
 
 
-        st.write("文件内文档列表。双击进行修改，在删除列填入 Y 可删除对应行。")
+        st.write("File document list. Double-click to modify, fill in Y in the delete column to delete the corresponding row.")
         docs = []
         df = pd.DataFrame([], columns=["seq", "id", "content", "source"])
         if selected_rows:
@@ -357,7 +357,7 @@ def knowledge_base_page(api: ApiRequest):
             gb.configure_column("seq", "No.", width=50)
             gb.configure_column(
                 "page_content",
-                "内容",
+                "Content",
                 editable=True,
                 autoHeight=True,
                 wrapText=True,
@@ -367,7 +367,7 @@ def knowledge_base_page(api: ApiRequest):
             )
             gb.configure_column(
                 "to_del",
-                "删除",
+                "Delete",
                 editable=True,
                 width=50,
                 wrapHeaderText=True,
@@ -381,7 +381,7 @@ def knowledge_base_page(api: ApiRequest):
             gb.configure_selection()
             edit_docs = AgGrid(df, gb.build(), fit_columns_on_grid_load=True)
 
-            if st.button("保存更改"):
+            if st.button("Save changes"):
                 origin_docs = {
                     x["id"]: {
                         "page_content": x["page_content"],
@@ -409,6 +409,6 @@ def knowledge_base_page(api: ApiRequest):
                         file_names=[file_name],
                         docs={file_name: changed_docs},
                     ):
-                        st.toast("更新文档成功")
+                        st.toast("Update document successfully")
                     else:
-                        st.toast("更新文档失败")
+                        st.toast("Update document failed")

@@ -48,7 +48,7 @@ class Planner(BaseModel):
             task_result = self.update_task_status(self.current_plan.id, self.current_plan.current_task_sequence,
                                                   True, False, result)
 
-        # 更新
+        # Update plan
         updated_response = (WritePlan(plan_chat_id=self.current_plan.plan_chat_id)
                             .update(task_result,
                                     self.current_plan.finished_success_tasks,
@@ -82,7 +82,7 @@ class Planner(BaseModel):
 
     def update_task_status(self, plan_id: str, task_sequence: int,
                            is_finished: bool, is_success: bool, result: Optional[str] = None) -> Task:
-        """更新任务状态"""
+        """Update task status"""
 
         task = next((
             task for task in self.current_plan.tasks
@@ -95,5 +95,5 @@ class Planner(BaseModel):
             if result:
                 task.result = result
 
-        # 返回更新后的计划
+        # Return updated task
         return task

@@ -13,8 +13,8 @@ def list_file_num_docs_id_by_kb_name_and_file_name(
         file_name: str,
 ) -> List[int]:
     """
-    列出某知识库某文件对应的所有Document的id。
-    返回形式：[str, ...]
+    List all document IDs for a specific file in a knowledge base.
+    Returns: List of document IDs
     """
     doc_ids = (
         session.query(FileDocModel.doc_id)
@@ -32,8 +32,8 @@ def list_docs_from_db(
         metadata: Dict = {},
 ) -> List[Dict]:
     """
-    列出某知识库某文件对应的所有Document。
-    返回形式：[{"id": str, "metadata": dict}, ...]
+    List all documents for a specific file in a knowledge base.
+    Returns: List of documents
     """
     docs = session.query(FileDocModel).filter(FileDocModel.kb_name.ilike(kb_name))
     if file_name:
@@ -51,8 +51,8 @@ def delete_docs_from_db(
         file_name: str = None,
 ) -> List[Dict]:
     """
-    删除某知识库某文件对应的所有Document，并返回被删除的Document。
-    返回形式：[{"id": str, "metadata": dict}, ...]
+    Delete all documents for a specific file in a knowledge base.
+    Returns: List of deleted documents
     """
     docs = list_docs_from_db(kb_name=kb_name, file_name=file_name)
     query = session.query(FileDocModel).filter(FileDocModel.kb_name.ilike(kb_name))
@@ -66,8 +66,8 @@ def delete_docs_from_db(
 @with_session
 def add_docs_to_db(session, kb_name: str, file_name: str, doc_infos: List[Dict]):
     """
-    将某知识库某文件对应的所有Document信息添加到数据库。
-    doc_infos形式：[{"id": str, "metadata": dict}, ...]
+    Add document information for a specific file in a knowledge base to the database.
+    doc_infos form: [{"id": str, "metadata": dict}, ...]
     """
     # ! 这里会出现doc_infos为None的情况，需要进一步排查
     if doc_infos is None:

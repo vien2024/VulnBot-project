@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
         selected_page = sac.menu(
             [
-                sac.MenuItem("知识库管理", icon="hdd-stack"),
+                sac.MenuItem("Knowledge Base Management", icon="hdd-stack"),
             ],
             key="selected_page",
             open_index=0,
@@ -39,5 +39,5 @@ if __name__ == "__main__":
 
         sac.divider()
 
-    if selected_page == "知识库管理":
+    if selected_page == "Knowledge Base Management":
         knowledge_base_page(api=api)

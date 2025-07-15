@@ -69,7 +69,7 @@ class ExecuteTask(BaseModel):
         thought = self.parse_response()
         self.code = thought
         logger.info(f"Running {thought}")
-        # 执行命令列表
+        # Execute command list
         shell = ShellManager.get_instance().get_shell()
         try:
             SMB_PROMPTS = [
@@ -86,7 +86,7 @@ class ExecuteTask(BaseModel):
             skip_next = False
 
             for i, command in enumerate(self.code):
-                # 添加跳过标记
+                # Skip next command if skip_next is True
                 if skip_next:
                     skip_next = False
                     continue

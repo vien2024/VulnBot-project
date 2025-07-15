@@ -18,44 +18,44 @@ kb_router = APIRouter(prefix="/knowledge_base", tags=["Knowledge Base Management
 
 
 kb_router.get(
-    "/list_knowledge_bases", response_model=ListResponse, summary="获取知识库列表"
+    "/list_knowledge_bases", response_model=ListResponse, summary="Get Knowledge Base List"
 )(list_kbs)
 
 kb_router.post(
-    "/create_knowledge_base", response_model=BaseResponse, summary="创建知识库"
+    "/create_knowledge_base", response_model=BaseResponse, summary="Create Knowledge Base"
 )(create_kb)
 
 kb_router.post(
-    "/delete_knowledge_base", response_model=BaseResponse, summary="删除知识库"
+    "/delete_knowledge_base", response_model=BaseResponse, summary="Delete Knowledge Base"
 )(delete_kb)
 
 kb_router.get(
-    "/list_files", response_model=ListResponse, summary="获取知识库内的文件列表"
+    "/list_files", response_model=ListResponse, summary="Get Files in Knowledge Base"
 )(list_files)
 
-kb_router.post("/search_docs", response_model=List[dict], summary="搜索知识库")(
+kb_router.post("/search_docs", response_model=List[dict], summary="Search Knowledge Base")(
     search_docs
 )
 
 kb_router.post(
     "/upload_docs",
     response_model=BaseResponse,
-    summary="上传文件到知识库，并/或进行向量化",
+    summary="Upload Files to Knowledge Base and/or Vectorize",
 )(upload_docs)
 
 kb_router.post(
-    "/delete_docs", response_model=BaseResponse, summary="删除知识库内指定文件"
+    "/delete_docs", response_model=BaseResponse, summary="Delete Files in Knowledge Base"
 )(delete_docs)
 
-kb_router.post("/update_info", response_model=BaseResponse, summary="更新知识库介绍")(
+kb_router.post("/update_info", response_model=BaseResponse, summary="Update Knowledge Base Description")(
     update_info
 )
 
 kb_router.post(
-    "/update_docs", response_model=BaseResponse, summary="更新现有文件到知识库"
+    "/update_docs", response_model=BaseResponse, summary="Update Existing Files in Knowledge Base"
 )(update_docs)
 
-kb_router.get("/download_doc", summary="下载对应的知识文件")(download_doc)
+kb_router.get("/download_doc", summary="Download Knowledge File")(download_doc)
 
 
 
