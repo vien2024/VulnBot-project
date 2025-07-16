@@ -1,4 +1,3 @@
-# TODO: REMOVE NON-WEB
 import asyncio
 import logging
 import logging.config

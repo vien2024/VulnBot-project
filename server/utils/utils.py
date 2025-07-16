@@ -72,19 +72,19 @@ def get_httpx_client(
             "http://": (
                 os.environ.get("http_proxy")
                 if os.environ.get("http_proxy")
-                and len(os.environ.get("http_proxy").strip())
+                   and len(os.environ.get("http_proxy").strip())
                 else None
             ),
             "https://": (
                 os.environ.get("https_proxy")
                 if os.environ.get("https_proxy")
-                and len(os.environ.get("https_proxy").strip())
+                   and len(os.environ.get("https_proxy").strip())
                 else None
             ),
             "all://": (
                 os.environ.get("all_proxy")
                 if os.environ.get("all_proxy")
-                and len(os.environ.get("all_proxy").strip())
+                   and len(os.environ.get("all_proxy").strip())
                 else None
             ),
         }
@@ -110,6 +110,7 @@ def get_httpx_client(
         return httpx.AsyncClient(**kwargs)
     else:
         return httpx.Client(**kwargs)
+
 
 
 def api_address(is_public: bool = False) -> str:

@@ -1,4 +1,3 @@
-# TODO: REMOVE NON-WEB
 import re
 import time
 from typing import List
@@ -81,7 +80,9 @@ class Execute(BaseModel):
                         if any(prompt in next_output.strip().split('\n')[-1] for prompt in PASSWORD_PROMPTS):
                             shell.shell.send('\x03')  # Send Ctrl+C
                             time.sleep(0.5)  # Wait for Ctrl+C to take effect
+                            # Clear the previous result
                             result = result.rsplit('Action:', 1)[0] + f'Action:{self.code[i + 1]}\nObservation: '
+                            # Resend the second command
                             new_output = shell.execute_cmd(self.code[i + 1])
                             result += new_output + '\n'
                     else:
