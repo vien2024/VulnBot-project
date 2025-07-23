@@ -1,7 +1,7 @@
-api_key: AIzaSyCFJwAwdxuWUUVT0ACtk4NIrmH4px15vV8
-llm_model: gemini
+api_key: csk-6rkwh6rnkk3j42njhd5emm3w4cr853
+llm_model: cerebras
 base_url: ''
-llm_model_name: gemini-2.5-pro
+llm_model_name: qwen-3-235b-a22b
 embedding_models: maidalun1020/bce-embedding-base_v1
 embedding_type: local
 context_length: 120000

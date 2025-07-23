@@ -40,6 +40,7 @@ class LLMType(StrEnum):
     OPENAI = "openai"
     OLLAMA = "ollama"
     GEMINI = "gemini"
+    CEREBRAS = "cerebras"
 
     def __missing__(self, key):
         return self.OLLAMA

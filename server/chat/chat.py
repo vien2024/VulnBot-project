@@ -15,6 +15,7 @@ from tenacity import (
     retry_if_exception_type,
 )
 import google.generativeai as genai
+from cerebras.cloud.sdk import Cerebras
 
 from config.config import Configs
 from db.repository.conversation_repository import add_conversation_to_db
@@ -139,6 +140,48 @@ class GeminiChat(ABC):
                 return f"**ERROR**: Blocked by Gemini API. Reason: {e.response.prompt_feedback}"
             return f"**ERROR**: {str(e)}"
 
+class CerebrasChat(ABC):
+    def __init__(self, config):
+        self.config = config
+        self.client = Cerebras(
+            api_key=self.config.api_key
+        )
+        self.model_name = self.config.llm_model_name
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=4, max=10),
+        retry=retry_if_exception_type(
+            (
+                httpx.HTTPStatusError,
+                httpx.ReadTimeout,
+                httpx.ConnectTimeout,
+                ConnectionError,
+            )
+        ),
+    )
+
+    def chat(self, history: List) -> str:
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=history,
+                temperature=self.config.temperature,
+            )
+            ans = response.choices[0].message.content
+            return ans
+        except (
+            httpx.HTTPStatusError,
+            httpx.ReadTimeout,
+            httpx.ConnectTimeout,
+            ConnectionError,
+        ) as e:
+            if getattr(e, "response", None) and e.response.status_code == 429:
+                # Rate limit error, wait longer
+                time.sleep(2)
+            raise  # Re-raise the exception to trigger retry
+        except Exception as e:
+            return f"**ERROR**: {str(e)}"
 
 def _chat(query: str, kb_name=None, conversation_id=None, kb_query=None, summary=True):
     try:
@@ -209,6 +252,8 @@ def _chat(query: str, kb_name=None, conversation_id=None, kb_query=None, summary
             client = OllamaChat(config=Configs.llm_config)
         elif Configs.llm_config.llm_model == LLMType.GEMINI:
             client = GeminiChat(config=Configs.llm_config)
+        elif Configs.llm_config.llm_model == LLMType.CEREBRAS:
+            client = CerebrasChat(config=Configs.llm_config)
         else:
             return "Unsupported model type"
 

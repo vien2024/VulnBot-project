@@ -18,6 +18,7 @@ numexpr==2.10.1
 numpy==1.26.4
 ollama==0.3.3
 openai==1.53.0
+cerebras_cloud_sdk==1.35.0
 opencv-python==4.10.0.84
 pandas==2.1.4
 pexpect==4.9.0
