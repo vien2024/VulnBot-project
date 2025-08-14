@@ -2,7 +2,7 @@ import asyncio
 import json
 import os
 import urllib
-from typing import Dict, List
+from typing import Dict, List, Any
 
 from fastapi import Body, File, Form, Query, UploadFile
 from fastapi.responses import FileResponse
@@ -16,6 +16,8 @@ from rag.kb.utils.kb_utils import validate_kb_name, KnowledgeFile, get_file_path
     files2docs_in_thread
 from server.utils.utils import BaseResponse, ListResponse
 from utils.log_common import build_logger
+from io import BytesIO
+
 
 logger = build_logger()
 

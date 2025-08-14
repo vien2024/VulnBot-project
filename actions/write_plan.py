@@ -15,8 +15,11 @@ class WritePlan(BaseModel):
     plan_chat_id: str
 
     def run(self, init_description) -> str:
-        rsp = _chat(query=DeepPentestPrompt.write_plan, conversation_id=self.plan_chat_id, kb_name=Configs.kb_config.kb_name, kb_query=init_description)
-
+        try:
+            rsp = _chat(query=DeepPentestPrompt.write_plan, conversation_id=self.plan_chat_id, kb_name=Configs.kb_config.kb_name, kb_query=init_description)
+        except Exception as e:
+            print(f"Error creating plan: {str(e)}")
+            return
         match = re.search(r'<json>(.*?)</json>', rsp, re.DOTALL)
         if match:
             code = match.group(1)

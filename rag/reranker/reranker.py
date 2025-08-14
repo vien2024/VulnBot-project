@@ -55,7 +55,7 @@ class LangchainReranker:
         if len(documents) == 0:  # to avoid empty api call
             return []
         doc_list = list(documents)
-        _docs = [doc["page_content"] for doc in doc_list]
+        _docs = [doc.page_content for doc in doc_list]
         sentence_pairs = [[query, _doc] for _doc in _docs]
         results = self._model.predict(
             sentences=sentence_pairs,
@@ -69,6 +69,6 @@ class LangchainReranker:
         final_results = []
         for value, index in zip(values, indices):
             doc = doc_list[index]
-            doc.get("metadata")["relevance_score"] = value
+            doc.metadata["relevance_score"] = value
             final_results.append(doc)
         return final_results

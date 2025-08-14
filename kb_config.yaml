@@ -3,7 +3,7 @@ milvus:
   uri: http://127.0.0.1:19530
   user: ''
   password: ''
-kb_name: ''
+kb_name: 
 chunk_size: 750
 overlap_size: 150
 top_n: 1

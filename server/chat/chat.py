@@ -24,12 +24,16 @@ from db.repository.message_repository import (
     add_message_to_db,
 )
 from rag.kb.api.kb_doc_api import search_docs
+from rag.kb.api.kb_online_api import search_with_context
 from rag.reranker.reranker import LangchainReranker
 from server.utils.utils import LLMType, replace_ip_with_targetip
 from utils.log_common import build_logger
 
-logger = build_logger()
 
+
+logger = build_logger()
+URI = "https://in03-56a0c941ed0ff6e.serverless.aws-eu-central-1.cloud.zilliz.com"
+TOKEN = "f0cef636066c8653aa07cf9b435a2faf18dcb7a1e13a19a8c61c11b786f8a49d61c6a7d9d8837844c0b78ace482899432121c9cc"
 
 class OpenAIChat(ABC):
     def __init__(self, config):
@@ -167,6 +171,7 @@ class CerebrasChat(ABC):
                 model=self.model_name,
                 messages=history,
                 temperature=self.config.temperature,
+                max_completion_tokens=8190,
             )
             ans = response.choices[0].message.content
             return ans
@@ -186,29 +191,33 @@ class CerebrasChat(ABC):
 def _chat(query: str, kb_name=None, conversation_id=None, kb_query=None, summary=True):
     try:
         if Configs.basic_config.enable_rag and kb_name is not None:
-            docs = asyncio.run(
-                run_in_threadpool(
-                    search_docs,
-                    query=kb_query,
-                    knowledge_base_name=kb_name,
-                    top_k=Configs.kb_config.top_k,
-                    score_threshold=Configs.kb_config.score_threshold,
-                    file_name="",
-                    metadata={},
-                )
-            )
+            #docs = asyncio.run(
+            #    run_in_threadpool(
+            #        search_docs,
+            #        query=kb_query,
+            #        knowledge_base_name=kb_name,
+            #        top_k=Configs.kb_config.top_k,
+            #        score_threshold=Configs.kb_config.score_threshold,
+            #        file_name="",
+            #        metadata={},
+            #    )
+            #)
 
+            docs = search_with_context(kb_query)
             reranker_model = LangchainReranker(
                 top_n=Configs.kb_config.top_n,
                 name_or_path=Configs.llm_config.rerank_model,
             )
-
             docs = reranker_model.compress_documents(documents=docs, query=kb_query)
-
+            print(f"""
+            ---SPECIAL---
+            {docs}
+            ---END-SPECIAL---
+            """)
             if len(docs) == 0:
                 context = ""
             else:
-                context = "\n".join([doc["page_content"] for doc in docs])
+                context = "\n".join([doc.page_content for doc in docs])
 
             if context:
                 context = replace_ip_with_targetip(context)
