@@ -32,8 +32,8 @@ from utils.log_common import build_logger
 
 
 logger = build_logger()
-URI = "https://in03-56a0c941ed0ff6e.serverless.aws-eu-central-1.cloud.zilliz.com"
-TOKEN = "f0cef636066c8653aa07cf9b435a2faf18dcb7a1e13a19a8c61c11b786f8a49d61c6a7d9d8837844c0b78ace482899432121c9cc"
+URI = "https://in03-56a0c941e.serverless.aws-eu-central-1.cloud.zilliz.com"
+TOKEN = "f0cef636066c8653aa07cf9b435a2faf18dcb7a1e13a19a8c61c11b786f8a49d61c6a7d9d8837844c0b78"
 
 class OpenAIChat(ABC):
     def __init__(self, config):
