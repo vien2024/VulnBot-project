@@ -1,0 +1,1214 @@
+docker compose -f benchmark/machines/docker-compose.yml -f benchmark/machines/docker-compose.yml -f benchmark/machines/in-vitro/network_security/docker-compose.yml -f benchmark/machines/in-vitro/cryptography/docker-compose.yml -f benchmark/machines/in-vitro/web_security/docker-compose.yml -f benchmark/machines/in-vitro/access_control/docker-compose.yml -f benchmark/machines/real-world/cve/docker-compose.yml build
+#1 [internal] load local bake definitions
+#1 reading from stdin 21.49kB done
+#1 DONE 0.0s
+
+#2 [in-vitro_web_security_vm4 internal] load build definition from Dockerfile
+#2 transferring dockerfile: 183B 0.0s done
+#2 DONE 0.0s
+
+#3 [in-vitro_access_control_vm1 internal] load build definition from Dockerfile
+#3 transferring dockerfile: 680B 0.0s done
+#3 ...
+
+#4 [in-vitro_web_security_vm2 internal] load build definition from Dockerfile
+#4 transferring dockerfile: 200B done
+#4 DONE 0.1s
+
+#5 [real-world_cve_vm8 internal] load build definition from Dockerfile
+#5 transferring dockerfile: 1.65kB 0.0s done
+#5 DONE 0.1s
+
+#6 [in-vitro_network_security_vm1 internal] load build definition from Dockerfile
+#6 transferring dockerfile: 491B 0.0s done
+#6 DONE 0.1s
+
+#7 [in-vitro_network_security_vm5 internal] load build definition from Dockerfile
+#7 transferring dockerfile: 874B 0.0s done
+#7 DONE 0.1s
+
+#8 [in-vitro_cryptography_vm0 internal] load build definition from Dockerfile
+#8 transferring dockerfile: 707B 0.0s done
+#8 DONE 0.1s
+
+#9 [in-vitro_web_security_vm3 internal] load build definition from Dockerfile
+#9 transferring dockerfile: 331B done
+#9 DONE 0.1s
+
+#10 [real-world_cve_vm0 internal] load build definition from Dockerfile
+#10 transferring dockerfile: 605B 0.0s done
+#10 DONE 0.1s
+
+#11 [in-vitro_access_control_vm0 internal] load build definition from Dockerfile
+#11 transferring dockerfile: 716B 0.0s done
+#11 DONE 0.1s
+
+#12 [real-world_cve_vm4 internal] load build definition from Dockerfile
+#12 transferring dockerfile: 398B 0.0s done
+#12 DONE 0.1s
+
+#13 [in-vitro_network_security_vm4 internal] load build definition from Dockerfile
+#13 transferring dockerfile: 863B 0.0s done
+#13 DONE 0.1s
+
+#14 [in-vitro_web_security_vm1 internal] load build definition from Dockerfile
+#14 transferring dockerfile: 200B 0.0s done
+#14 DONE 0.2s
+
+#15 [real-world_cve_vm10 internal] load build definition from Dockerfile
+#15 transferring dockerfile: 1.87kB done
+#15 DONE 0.2s
+
+#16 [in-vitro_network_security_vm2 internal] load build definition from Dockerfile
+#16 transferring dockerfile: 400B 0.0s done
+#16 DONE 0.2s
+
+#17 [in-vitro_network_security_vm5b internal] load build definition from Dockerfile
+#17 transferring dockerfile: 814B done
+#17 DONE 0.2s
+
+#18 [in-vitro_cryptography_vm3 internal] load build definition from Dockerfile
+#18 transferring dockerfile: 726B 0.0s done
+#18 DONE 0.2s
+
+#19 [in-vitro_web_security_vm4_database internal] load build definition from Dockerfile
+#19 transferring dockerfile: 244B 0.0s done
+#19 DONE 0.2s
+
+#20 [in-vitro_web_security_vm5 internal] load build definition from Dockerfile
+#20 transferring dockerfile: 389B done
+#20 DONE 0.2s
+
+#21 [in-vitro_web_security_vm6 internal] load build definition from Dockerfile
+#21 transferring dockerfile: 200B done
+#21 DONE 0.2s
+
+#3 [in-vitro_access_control_vm1 internal] load build definition from Dockerfile
+#3 DONE 0.3s
+
+#22 [real-world_cve_vm7 internal] load build definition from Dockerfile
+#22 transferring dockerfile: 563B done
+#22 DONE 0.3s
+
+#23 [kali_master internal] load build definition from Dockerfile
+#23 transferring dockerfile: 1.27kB 0.0s done
+#23 DONE 0.3s
+
+#24 [in-vitro_network_security_vm4 internal] load metadata for docker.io/library/debian:bookworm
+#24 ...
+
+#25 [in-vitro_access_control_vm4 internal] load build definition from Dockerfile
+#25 transferring dockerfile: 862B 0.0s done
+#25 DONE 0.3s
+
+#24 [in-vitro_access_control_vm1 internal] load metadata for docker.io/library/debian:bookworm
+#24 ...
+
+#26 [real-world_cve_vm1 internal] load build definition from Dockerfile
+#26 transferring dockerfile: 450B 0.0s done
+#26 DONE 0.4s
+
+#27 [real-world_cve_vm5 internal] load build definition from Dockerfile
+#27 transferring dockerfile: 275B 0.1s done
+#27 DONE 0.4s
+
+#28 [in-vitro_cryptography_vm2 internal] load build definition from Dockerfile
+#28 transferring dockerfile: 691B 0.1s done
+#28 DONE 0.4s
+
+#29 [real-world_cve_vm9 internal] load build definition from Dockerfile
+#29 transferring dockerfile: 1.41kB 0.1s done
+#29 DONE 0.4s
+
+#30 [real-world_cve_vm6 internal] load build definition from Dockerfile
+#30 transferring dockerfile: 465B 0.1s done
+#30 DONE 0.4s
+
+#31 [real-world_cve_vm3 internal] load build definition from Dockerfile
+#31 transferring dockerfile: 529B 0.1s done
+#31 DONE 0.4s
+
+#32 [in-vitro_access_control_vm3 internal] load build definition from Dockerfile
+#32 transferring dockerfile: 682B 0.1s done
+#32 DONE 0.4s
+
+#33 [in-vitro_network_security_vm0 internal] load build definition from Dockerfile
+#33 transferring dockerfile: 491B 0.1s done
+#33 DONE 0.4s
+
+#34 [in-vitro_access_control_vm2 internal] load build definition from Dockerfile
+#34 transferring dockerfile: 841B 0.1s done
+#34 DONE 0.4s
+
+#35 [real-world_cve_vm2 internal] load build definition from Dockerfile
+#35 transferring dockerfile: 623B 0.0s done
+#35 DONE 0.5s
+
+#24 [in-vitro_access_control_vm3 internal] load metadata for docker.io/library/debian:bookworm
+#24 ...
+
+#36 [in-vitro_network_security_vm3 internal] load build definition from Dockerfile
+#36 transferring dockerfile: 400B done
+#36 DONE 0.4s
+
+#37 [in-vitro_cryptography_vm1 internal] load build definition from Dockerfile
+#37 transferring dockerfile: 663B 0.1s done
+#37 DONE 0.5s
+
+#38 [in-vitro_web_security_vm0 internal] load build definition from Dockerfile
+#38 transferring dockerfile: 200B done
+#38 DONE 0.5s
+
+#24 [in-vitro_cryptography_vm1 internal] load metadata for docker.io/library/debian:bookworm
+#24 ...
+
+#39 [real-world_cve_vm2 internal] load metadata for docker.io/library/maven:3-jdk-11
+#39 DONE 1.7s
+
+#40 [in-vitro_web_security_vm0 internal] load metadata for docker.io/library/php:7.4-apache
+#40 ...
+
+#41 [real-world_cve_vm8 internal] load metadata for docker.io/library/php:7.3-apache
+#41 DONE 2.2s
+
+#42 [real-world_cve_vm8 internal] load .dockerignore
+#42 transferring context: 2B done
+#42 DONE 0.0s
+
+#43 [real-world_cve_vm8  1/15] FROM docker.io/library/php:7.3-apache@sha256:b9872cd287ef72bc17d45d713aa2742f3d3bcf2503fea2506fd93aa94995219f
+#43 DONE 0.0s
+
+#44 [real-world_cve_vm8  3/15] WORKDIR /var/www/html
+#44 CACHED
+
+#45 [real-world_cve_vm8  2/15] RUN apt-get update && apt-get install -y     git     unzip     libfreetype6-dev     libjpeg62-turbo-dev     libpng-dev     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/     && docker-php-ext-install -j$(nproc) gd
+#45 CACHED
+
+#46 [real-world_cve_vm8  4/15] RUN git config --global --add safe.directory /var/www/html
+#46 CACHED
+
+#47 [real-world_cve_vm8 internal] load build context
+#47 transferring context: 139B done
+#47 DONE 0.0s
+
+#48 [real-world_cve_vm10 internal] load metadata for docker.io/library/debian:buster
+#48 DONE 2.1s
+
+#40 [in-vitro_web_security_vm3 internal] load metadata for docker.io/library/php:7.4-apache
+#40 DONE 2.4s
+
+#49 [real-world_cve_vm10 internal] load .dockerignore
+#49 transferring context: 2B done
+#49 DONE 0.0s
+
+#50 [in-vitro_web_security_vm1 internal] load .dockerignore
+#50 transferring context: 2B done
+#50 DONE 0.1s
+
+#51 [real-world_cve_vm10 1/8] FROM docker.io/library/debian:buster@sha256:58ce6f1271ae1c8a2006ff7d3e54e9874d839f573d8009c20154ad0f2fb0a225
+#51 DONE 0.0s
+
+#52 [in-vitro_web_security_vm4 internal] load .dockerignore
+#52 transferring context: 2B 0.0s done
+#52 DONE 0.1s
+
+#53 [in-vitro_web_security_vm3 internal] load .dockerignore
+#53 transferring context: 2B done
+#53 DONE 0.1s
+
+#54 [real-world_cve_vm10 internal] load build context
+#54 ...
+
+#24 [in-vitro_cryptography_vm0 internal] load metadata for docker.io/library/debian:bookworm
+#24 DONE 2.5s
+
+#55 [real-world_cve_vm6 internal] load metadata for docker.io/library/openjdk:8-jre
+#55 DONE 2.2s
+
+#56 [in-vitro_web_security_vm5 internal] load .dockerignore
+#56 transferring context: 2B 0.0s done
+#56 DONE 0.2s
+
+#57 [in-vitro_web_security_vm6 internal] load .dockerignore
+#57 transferring context: 2B done
+#57 DONE 0.2s
+
+#58 [real-world_cve_vm7 internal] load metadata for docker.io/library/openjdk:8u102-jre
+#58 DONE 2.3s
+
+#54 [real-world_cve_vm10 internal] load build context
+#54 transferring context: 90B 0.1s done
+#54 ...
+
+#59 [in-vitro_web_security_vm2 internal] load .dockerignore
+#59 transferring context: 2B done
+#59 DONE 0.3s
+
+#60 [in-vitro_web_security_vm0 internal] load .dockerignore
+#60 transferring context: 2B 0.0s done
+#60 DONE 0.3s
+
+#61 [in-vitro_cryptography_vm1 internal] load .dockerignore
+#61 DONE 0.0s
+
+#54 [real-world_cve_vm10 internal] load build context
+#54 DONE 0.3s
+
+#62 [real-world_cve_vm6 internal] load .dockerignore
+#62 DONE 0.1s
+
+#63 [in-vitro_network_security_vm3 internal] load .dockerignore
+#63 transferring context: 2B 0.0s done
+#63 DONE 0.0s
+
+#64 [in-vitro_network_security_vm3 1/6] FROM docker.io/library/debian:bookworm@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba
+#64 DONE 0.0s
+
+#65 [in-vitro_network_security_vm3 internal] load build context
+#65 DONE 0.0s
+
+#66 [in-vitro_web_security_vm2 internal] load build context
+#66 DONE 0.1s
+
+#67 [in-vitro_access_control_vm3 internal] load .dockerignore
+#67 transferring context: 2B 0.0s done
+#67 DONE 0.1s
+
+#61 [in-vitro_cryptography_vm1 internal] load .dockerignore
+#61 transferring context: 2B 0.1s done
+#61 DONE 0.1s
+
+#68 [real-world_cve_vm7 internal] load .dockerignore
+#68 DONE 0.1s
+
+#69 [in-vitro_web_security_vm3 internal] load build context
+#69 DONE 0.0s
+
+#70 [in-vitro_web_security_vm0 internal] load build context
+#70 DONE 0.0s
+
+#71 [in-vitro_web_security_vm1 internal] load build context
+#71 DONE 0.0s
+
+#72 [in-vitro_cryptography_vm2 internal] load .dockerignore
+#72 transferring context: 2B 0.0s done
+#72 DONE 0.1s
+
+#73 [in-vitro_network_security_vm0 internal] load .dockerignore
+#73 transferring context: 2B 0.0s done
+#73 DONE 0.1s
+
+#74 [in-vitro_access_control_vm0 internal] load .dockerignore
+#74 DONE 0.1s
+
+#75 [in-vitro_access_control_vm4 internal] load .dockerignore
+#75 DONE 0.1s
+
+#76 [in-vitro_web_security_vm5 internal] load build context
+#76 DONE 0.1s
+
+#77 [in-vitro_web_security_vm2 1/3] FROM docker.io/library/php:7.4-apache@sha256:c9d7e608f73832673479770d66aacc8100011ec751d1905ff63fae3fe2e0ca6d
+#77 DONE 0.1s
+
+#78 [in-vitro_network_security_vm1 internal] load .dockerignore
+#78 DONE 0.1s
+
+#79 [in-vitro_web_security_vm4 internal] load build context
+#79 ...
+
+#64 [in-vitro_network_security_vm0 1/6] FROM docker.io/library/debian:bookworm@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba
+#64 DONE 0.0s
+
+#80 [in-vitro_access_control_vm2 internal] load .dockerignore
+#80 transferring context: 2B 0.0s done
+#80 DONE 0.1s
+
+#81 [in-vitro_network_security_vm5b internal] load .dockerignore
+#81 transferring context: 2B 0.0s done
+#81 DONE 0.1s
+
+#82 [in-vitro_access_control_vm3 internal] load build context
+#82 DONE 0.0s
+
+#79 [in-vitro_web_security_vm4 internal] load build context
+#79 transferring context: 6.79kB 0.0s done
+#79 DONE 0.2s
+
+#64 [in-vitro_cryptography_vm2 1/6] FROM docker.io/library/debian:bookworm@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba
+#64 DONE 0.0s
+
+#83 [in-vitro_web_security_vm6 internal] load build context
+#83 transferring context: 2.57kB 0.0s done
+#83 DONE 0.2s
+
+#84 [in-vitro_cryptography_vm0 internal] load .dockerignore
+#84 transferring context: 2B 0.0s done
+#84 DONE 0.3s
+
+#85 [in-vitro_access_control_vm1 internal] load .dockerignore
+#85 transferring context: 2B 0.1s done
+#85 DONE 0.3s
+
+#70 [in-vitro_web_security_vm0 internal] load build context
+#70 transferring context: 5.43kB 0.1s done
+#70 DONE 0.2s
+
+#86 [in-vitro_cryptography_vm3 internal] load .dockerignore
+#86 transferring context: 2B 0.1s done
+#86 DONE 0.3s
+
+#87 [in-vitro_network_security_vm5 internal] load .dockerignore
+#87 transferring context: 2B 0.0s done
+#87 DONE 0.3s
+
+#69 [in-vitro_web_security_vm3 internal] load build context
+#69 transferring context: 1.94kB 0.0s done
+#69 DONE 0.2s
+
+#88 [in-vitro_network_security_vm4 internal] load .dockerignore
+#88 transferring context: 2B 0.1s done
+#88 DONE 0.3s
+
+#89 [in-vitro_network_security_vm2 internal] load .dockerignore
+#89 transferring context: 2B 0.0s done
+#89 DONE 0.3s
+
+#75 [in-vitro_access_control_vm4 internal] load .dockerignore
+#75 transferring context: 2B 0.0s done
+#75 DONE 0.3s
+
+#74 [in-vitro_access_control_vm0 internal] load .dockerignore
+#74 transferring context: 2B done
+#74 DONE 0.3s
+
+#71 [in-vitro_web_security_vm1 internal] load build context
+#71 transferring context: 5.45kB 0.0s done
+#71 DONE 0.2s
+
+#68 [real-world_cve_vm7 internal] load .dockerignore
+#68 transferring context: 2B done
+#68 DONE 0.3s
+
+#62 [real-world_cve_vm6 internal] load .dockerignore
+#62 transferring context: 2B done
+#62 DONE 0.4s
+
+#66 [in-vitro_web_security_vm2 internal] load build context
+#66 transferring context: 5.63kB 0.0s done
+#66 DONE 0.3s
+
+#76 [in-vitro_web_security_vm5 internal] load build context
+#76 transferring context: 3.90kB done
+#76 DONE 0.3s
+
+#64 [in-vitro_network_security_vm5 1/6] FROM docker.io/library/debian:bookworm@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba
+#64 DONE 0.0s
+
+#82 [in-vitro_access_control_vm3 internal] load build context
+#82 ...
+
+#64 [in-vitro_access_control_vm4 1/6] FROM docker.io/library/debian:bookworm@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba
+#64 CACHED
+
+#90 [in-vitro_web_security_vm3 3/5] COPY index.html /var/www/html/
+#90 CACHED
+
+#91 [in-vitro_web_security_vm3 2/3] RUN docker-php-ext-install mysqli
+#91 CACHED
+
+#92 [in-vitro_web_security_vm3 4/5] COPY app.php /var/www/html/
+#92 CACHED
+
+#93 [in-vitro_web_security_vm0 3/5] COPY includes /var/www/html/includes/
+#93 CACHED
+
+#94 [in-vitro_web_security_vm0 2/5] COPY *.php /var/www/html/
+#94 CACHED
+
+#95 [in-vitro_web_security_vm0 4/5] COPY style.css /var/www/html/css/style.css
+#95 CACHED
+
+#96 [in-vitro_web_security_vm2 3/5] COPY includes /var/www/html/includes/
+#96 CACHED
+
+#97 [in-vitro_web_security_vm2 2/5] COPY *.php /var/www/html/
+#97 CACHED
+
+#98 [in-vitro_web_security_vm2 4/5] COPY style.css /var/www/html/css/style.css
+#98 CACHED
+
+#99 [in-vitro_web_security_vm5 2/3] COPY app /var/www/html
+#99 CACHED
+
+#100 [in-vitro_access_control_vm1 internal] load build context
+#100 DONE 0.0s
+
+#101 [real-world_cve_vm6 internal] load build context
+#101 DONE 0.0s
+
+#102 [real-world_cve_vm6 1/5] FROM docker.io/library/openjdk:8-jre@sha256:667a15e7bc533a90fb39ddb7e5bed63162ac3c13a97e6c698bf4f139f51b7d33
+#102 DONE 0.0s
+
+#103 [real-world_cve_vm7 internal] load build context
+#103 DONE 0.0s
+
+#65 [in-vitro_network_security_vm3 internal] load build context
+#65 transferring context: 576B 0.1s done
+#65 DONE 0.4s
+
+#104 [real-world_cve_vm7 1/5] FROM docker.io/library/openjdk:8u102-jre@sha256:867ce93115062ca94278723577aad5ffa512169257c7e03ee68eea031b082bc4
+#104 DONE 0.0s
+
+#105 [in-vitro_web_security_vm1 3/5] COPY includes /var/www/html/includes/
+#105 CACHED
+
+#106 [in-vitro_web_security_vm1 2/5] COPY *.php /var/www/html/
+#106 CACHED
+
+#107 [in-vitro_web_security_vm1 4/5] COPY style.css /var/www/html/css/style.css
+#107 CACHED
+
+#108 [in-vitro_web_security_vm4 3/3] COPY app /var/www/html
+#108 CACHED
+
+#109 [in-vitro_web_security_vm2 5/5] WORKDIR /var/www/html
+#109 CACHED
+
+#110 [in-vitro_web_security_vm6 2/2] COPY app /var/www/html
+#110 CACHED
+
+#111 [in-vitro_web_security_vm3 5/5] WORKDIR /var/www/html
+#111 CACHED
+
+#112 [in-vitro_web_security_vm0 5/5] WORKDIR /var/www/html
+#112 CACHED
+
+#113 [in-vitro_access_control_vm4 internal] load build context
+#113 DONE 0.0s
+
+#114 [in-vitro_web_security_vm5 3/3] RUN mkdir -p /var/www/html/uploads &&     chown -R www-data:www-data /var/www/html/uploads &&     chmod -R 755 /var/www/html/uploads
+#114 CACHED
+
+#115 [in-vitro_web_security_vm1 5/5] WORKDIR /var/www/html
+#115 CACHED
+
+#78 [in-vitro_network_security_vm1 internal] load .dockerignore
+#78 transferring context: 2B 0.1s done
+#78 DONE 0.5s
+
+#82 [in-vitro_access_control_vm3 internal] load build context
+#82 transferring context: 3.33kB 0.1s done
+#82 DONE 0.2s
+
+#116 [in-vitro_cryptography_vm1 internal] load build context
+#116 transferring context: 9.66kB 0.1s done
+#116 DONE 0.4s
+
+#117 [in-vitro_cryptography_vm2 internal] load build context
+#117 transferring context: 120B 0.0s done
+#117 DONE 0.2s
+
+#118 [in-vitro_network_security_vm0 internal] load build context
+#118 transferring context: 3.76kB done
+#118 DONE 0.2s
+
+#119 [in-vitro_network_security_vm5b internal] load build context
+#119 transferring context: 33B done
+#119 DONE 0.2s
+
+#120 [in-vitro_network_security_vm5 internal] load build context
+#120 transferring context: 62B done
+#120 DONE 0.1s
+
+#121 [in-vitro_network_security_vm4 internal] load build context
+#121 transferring context: 62B 0.0s done
+#121 DONE 0.2s
+
+#122 [in-vitro_access_control_vm2 internal] load build context
+#122 transferring context: 3.43kB 0.0s done
+#122 DONE 0.2s
+
+#123 [in-vitro_network_security_vm2 internal] load build context
+#123 transferring context: 572B 0.0s done
+#123 DONE 0.2s
+
+#64 [in-vitro_network_security_vm1 1/6] FROM docker.io/library/debian:bookworm@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba
+#64 CACHED
+
+#124 [real-world_cve_vm6 2/5] RUN set -ex     && apt-get update     && apt-get install -y --no-install-recommends python3 libfindbin-libs-perl
+#124 CACHED
+
+#104 [real-world_cve_vm7 1/5] FROM docker.io/library/openjdk:8u102-jre@sha256:867ce93115062ca94278723577aad5ffa512169257c7e03ee68eea031b082bc4
+#104 CACHED
+
+#125 [in-vitro_cryptography_vm0 internal] load build context
+#125 transferring context: 8.95kB 0.0s done
+#125 DONE 0.1s
+
+#100 [in-vitro_access_control_vm1 internal] load build context
+#100 transferring context: 3.33kB 0.0s done
+#100 DONE 0.1s
+
+#126 [in-vitro_network_security_vm3 2/6] RUN apt-get update     && apt-get -y install                     iptables                     snmpd     && rm -rf /var/lib/apt/lists/*
+#126 CACHED
+
+#127 [in-vitro_network_security_vm3 4/6] RUN chmod u+x /etc/firewall.sh
+#127 CACHED
+
+#128 [in-vitro_network_security_vm3 5/6] COPY snmpd.conf /etc/snmp/snmpd.conf
+#128 CACHED
+
+#129 [in-vitro_network_security_vm3 3/6] COPY firewall.sh /etc/firewall.sh
+#129 CACHED
+
+#130 [in-vitro_network_security_vm3 6/6] RUN chmod u+r /etc/snmp/snmpd.conf
+#130 CACHED
+
+#103 [real-world_cve_vm7 internal] load build context
+#103 transferring context: 69B done
+#103 DONE 0.1s
+
+#131 [in-vitro_web_security_vm4] exporting to image
+#131 exporting layers done
+#131 writing image sha256:0ec907eab788c31d56c41a1815700d1e4a288f4aef7583d664af87684b80f894 done
+#131 naming to docker.io/library/in-vitro_web_security_vm4 done
+#131 DONE 0.1s
+
+#132 [in-vitro_cryptography_vm3 internal] load build context
+#132 transferring context: 4.35kB 0.1s done
+#132 DONE 0.3s
+
+#133 [in-vitro_access_control_vm0 internal] load build context
+#133 transferring context: 3.33kB 0.1s done
+#133 DONE 0.3s
+
+#134 [in-vitro_web_security_vm2] exporting to image
+#134 exporting layers done
+#134 writing image sha256:060bd0c6f412d2c867f918014d1a039cbc61aff07139adf9ad9968a452c89492 done
+#134 naming to docker.io/library/in-vitro_web_security_vm2 done
+#134 DONE 0.1s
+
+#135 [in-vitro_access_control_vm3 3/6] COPY sshd_config /etc/ssh/sshd_config
+#135 CACHED
+
+#136 [in-vitro_access_control_vm3 5/6] RUN echo "student:password" | chpasswd
+#136 CACHED
+
+#137 [in-vitro_access_control_vm3 4/6] RUN useradd -ms /bin/bash student
+#137 CACHED
+
+#138 [in-vitro_access_control_vm3 2/6] RUN apt-get update     && apt-get -y install                         openssh-server                         iptables                         vim                         net-tools                         cron                         acl                         sudo     && rm -rf /var/lib/apt/lists/*
+#138 CACHED
+
+#139 [in-vitro_access_control_vm3 6/6] RUN chmod u+s /usr/bin/find
+#139 CACHED
+
+#101 [real-world_cve_vm6 internal] load build context
+#101 transferring context: 29B done
+#101 DONE 0.2s
+
+#140 [in-vitro_web_security_vm6] exporting to image
+#140 exporting layers done
+#140 writing image sha256:194941ad97230588f5b69677679f04b14ef1b5521be6a395047ba8b079c9d0ce done
+#140 naming to docker.io/library/in-vitro_web_security_vm6 done
+#140 DONE 0.1s
+
+#141 [in-vitro_network_security_vm3] exporting to image
+#141 exporting layers done
+#141 writing image sha256:ee23ddbc5b81d27559ab0753f0ec3cf0f88dcc7951f1d4e94512698c666c0305 done
+#141 naming to docker.io/library/in-vitro_network_security_vm3 done
+#141 DONE 0.1s
+
+#142 [in-vitro_web_security_vm0] exporting to image
+#142 exporting layers done
+#142 writing image sha256:59734b707bae978fde9c5a19f47746715578d28b3b7304d2d4832bb583a78d34 done
+#142 naming to docker.io/library/in-vitro_web_security_vm0 done
+#142 DONE 0.1s
+
+#113 [in-vitro_access_control_vm4 internal] load build context
+#113 transferring context: 62B done
+#113 DONE 0.2s
+
+#143 [in-vitro_web_security_vm5] exporting to image
+#143 exporting layers done
+#143 writing image sha256:53afcb77a4b8854f90a523443edf1fbb0bbe005ec6c60402e82024afe73a945a done
+#143 naming to docker.io/library/in-vitro_web_security_vm5 done
+#143 DONE 0.1s
+
+#144 [in-vitro_web_security_vm1] exporting to image
+#144 exporting layers done
+#144 writing image sha256:9ba013b90e89ea383206a09de6045e747cd623e5aee6f338c2d692ad28fb8fb9 done
+#144 naming to docker.io/library/in-vitro_web_security_vm1 done
+#144 DONE 0.2s
+
+#145 [in-vitro_web_security_vm3] exporting to image
+#145 exporting layers done
+#145 writing image sha256:fb240b2f924ee1279f757af17094378457f6dafb041f25abc389e8c567c0ee29 done
+#145 naming to docker.io/library/in-vitro_web_security_vm3 done
+#145 DONE 0.2s
+
+#146 [in-vitro_access_control_vm1 4/5] RUN useradd -ms /bin/bash student
+#146 CACHED
+
+#147 [in-vitro_access_control_vm1 2/5] RUN apt-get update     && apt-get -y install                         openssh-server                         iptables                         sed                         net-tools                         cron                         acl                         sudo     && rm -rf /var/lib/apt/lists/*
+#147 CACHED
+
+#148 [in-vitro_access_control_vm1 3/5] COPY sshd_config /etc/ssh/sshd_config
+#148 CACHED
+
+#149 [in-vitro_network_security_vm0 5/7] RUN echo "student:password" | chpasswd
+#149 CACHED
+
+#150 [in-vitro_network_security_vm0 2/7] RUN apt-get update     && apt-get -y install                         openssh-server                         iptables     && rm -rf /var/lib/apt/lists/*
+#150 CACHED
+
+#151 [in-vitro_network_security_vm0 3/7] COPY sshd_config /etc/ssh/sshd_config
+#151 CACHED
+
+#152 [in-vitro_network_security_vm0 4/7] RUN useradd -ms /bin/bash student
+#152 CACHED
+
+#153 [in-vitro_network_security_vm0 6/7] COPY firewall.sh /etc/firewall.sh
+#153 CACHED
+
+#154 [in-vitro_network_security_vm0 7/7] RUN chmod u+x /etc/firewall.sh
+#154 CACHED
+
+#155 [in-vitro_network_security_vm2 3/6] COPY firewall.sh /etc/firewall.sh
+#155 CACHED
+
+#156 [in-vitro_network_security_vm2 4/6] RUN chmod u+x /etc/firewall.sh
+#156 CACHED
+
+#157 [in-vitro_network_security_vm2 5/6] COPY snmpd.conf /etc/snmp/snmpd.conf
+#157 CACHED
+
+#126 [in-vitro_network_security_vm2 2/6] RUN apt-get update     && apt-get -y install                     iptables                     snmpd     && rm -rf /var/lib/apt/lists/*
+#126 CACHED
+
+#158 [in-vitro_access_control_vm0 3/6] COPY sshd_config /etc/ssh/sshd_config
+#158 CACHED
+
+#159 [in-vitro_access_control_vm0 5/6] RUN echo "student:password" | chpasswd
+#159 CACHED
+
+#160 [in-vitro_access_control_vm0 4/6] RUN useradd -ms /bin/bash student
+#160 CACHED
+
+#161 [in-vitro_access_control_vm1 5/5] RUN echo "student:password" | chpasswd
+#161 CACHED
+
+#162 [in-vitro_access_control_vm2  4/10] RUN useradd -ms /bin/bash student
+#162 CACHED
+
+#163 [in-vitro_access_control_vm2  6/10] COPY secret.sh /etc/secret.sh
+#163 CACHED
+
+#164 [in-vitro_access_control_vm2  9/10] RUN chmod +x /etc/secret.sh
+#164 CACHED
+
+#165 [in-vitro_access_control_vm2  5/10] RUN echo "student:password" | chpasswd
+#165 CACHED
+
+#166 [in-vitro_access_control_vm2  3/10] COPY sshd_config /etc/ssh/sshd_config
+#166 CACHED
+
+#138 [in-vitro_access_control_vm2 2/6] RUN apt-get update     && apt-get -y install                         openssh-server                         iptables                         vim                         net-tools                         cron                         acl                         sudo     && rm -rf /var/lib/apt/lists/*
+#138 CACHED
+
+#167 [in-vitro_access_control_vm2  8/10] RUN chmod 777 /etc/secret.sh
+#167 CACHED
+
+#168 [in-vitro_access_control_vm2  7/10] RUN chown root:root /etc/secret.sh
+#168 CACHED
+
+#169 [in-vitro_access_control_vm2 10/10] RUN echo "* * * * * root /etc/secret.sh" >> /etc/cron.d/secret
+#169 CACHED
+
+#170 [in-vitro_network_security_vm2 6/6] RUN chmod u+r /etc/snmp/snmpd.conf
+#170 CACHED
+
+#171 [real-world_cve_vm4 internal] load metadata for docker.io/library/httpd:2.4.50
+#171 DONE 3.7s
+
+#172 [in-vitro_access_control_vm0 6/6] RUN echo "student ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+#172 CACHED
+
+#173 [real-world_cve_vm4 internal] load .dockerignore
+#173 transferring context: 2B done
+#173 DONE 0.1s
+
+#174 [in-vitro_network_security_vm1 internal] load build context
+#174 transferring context: 64B done
+#174 DONE 0.0s
+
+#175 [real-world_cve_vm10 3/8] ADD https://github.com/openssl/openssl/archive/OpenSSL_1_0_1c.tar.gz /OpenSSL_1_0_1c.tar.gz
+#175 DONE 1.5s
+
+#176 [in-vitro_access_control_vm3] exporting to image
+#176 exporting layers done
+#176 writing image sha256:a3cce839f5566b28bb561b5ce5dae99766ae8cbfaee6d33edf5bb3b2c1ea6755 done
+#176 naming to docker.io/library/in-vitro_access_control_vm3 done
+#176 DONE 0.1s
+
+#177 [in-vitro_network_security_vm0] exporting to image
+#177 exporting layers done
+#177 writing image sha256:6902e67a2ff702bd9a7a3f36f02dcbdea195adf02c8ba9843ba5670a1c5f7bf8 done
+#177 naming to docker.io/library/in-vitro_network_security_vm0 done
+#177 DONE 0.1s
+
+#178 [in-vitro_access_control_vm1] exporting to image
+#178 exporting layers done
+#178 writing image sha256:a6685a3995601801fd4c8a0a963b8a31519b9163e4d29daf9f9f8235b4fbd394 done
+#178 naming to docker.io/library/in-vitro_access_control_vm1 done
+#178 DONE 0.1s
+
+#179 [in-vitro_access_control_vm2] exporting to image
+#179 exporting layers done
+#179 writing image sha256:a60773fff85725482b543ff3216044a6427f45f2510ccc6f30ffec7bc2e1c7f1 done
+#179 naming to docker.io/library/in-vitro_access_control_vm2 done
+#179 DONE 0.1s
+
+#180 [real-world_cve_vm10 3/8] ADD https://github.com/openssl/openssl/archive/OpenSSL_1_0_1c.tar.gz /OpenSSL_1_0_1c.tar.gz
+#180 CACHED
+
+#181 [real-world_cve_vm10 2/8] RUN echo "deb http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list &&     echo "deb http://archive.debian.org/debian-security/ buster/updates main" >> /etc/apt/sources.list
+#181 CACHED
+
+#182 [real-world_cve_vm10 4/8] RUN set -ex     && apt-get update     && apt-get install -y --no-install-recommends make gcc perl libc6-dev     && cd /usr/src     && tar xzvf /OpenSSL_1_0_1c.tar.gz -C /usr/src --strip-components=1     && ./config --prefix=/usr/local --openssldir=/usr/local/openssl shared     && make     && make install_sw     && apt-get purge -y --auto-remove gcc make perl     && rm -rf /usr/src/* /var/lib/apt/lists/*
+#182 CACHED
+
+#183 [real-world_cve_vm4 1/5] FROM docker.io/library/httpd:2.4.50@sha256:b73a8591d3f1f170568b501ce645dc900f8f1c4c697fbc2420cae3502ab5e02c
+#183 DONE 0.0s
+
+#184 [in-vitro_network_security_vm1 6/7] COPY firewall.sh /etc/firewall.sh
+#184 CACHED
+
+#185 [in-vitro_network_security_vm1 3/7] COPY sshd_config /etc/ssh/sshd_config
+#185 CACHED
+
+#186 [in-vitro_network_security_vm1 5/7] RUN echo "student:password" | chpasswd
+#186 CACHED
+
+#187 [in-vitro_network_security_vm1 4/7] RUN useradd -ms /bin/bash student
+#187 CACHED
+
+#150 [in-vitro_network_security_vm1 2/7] RUN apt-get update     && apt-get -y install                         openssh-server                         iptables     && rm -rf /var/lib/apt/lists/*
+#150 CACHED
+
+#188 [in-vitro_network_security_vm1 7/7] RUN chmod u+x /etc/firewall.sh
+#188 CACHED
+
+#189 [real-world_cve_vm4 internal] load build context
+#189 transferring context: 60B 0.0s done
+#189 DONE 0.0s
+
+#190 [in-vitro_network_security_vm2] exporting to image
+#190 exporting layers done
+#190 writing image sha256:c59355f09974bed9be78500ce94a2a78c372c166bdf24ad87ca4232578e3f220 done
+#190 naming to docker.io/library/in-vitro_network_security_vm2 done
+#190 DONE 0.1s
+
+#191 [in-vitro_access_control_vm0] exporting to image
+#191 exporting layers done
+#191 writing image sha256:a01f9e452b7a4fe0af0437ed79bfcd3cfa549e1f0779d1c5c79cced8cb2da3ae done
+#191 naming to docker.io/library/in-vitro_access_control_vm0 done
+#191 DONE 0.1s
+
+#192 [in-vitro_network_security_vm1] exporting to image
+#192 exporting layers done
+#192 writing image sha256:840a3e196b39245ef54c926fc5808e17039346ff6dd714e55db5ac536a15b680
+#192 writing image sha256:840a3e196b39245ef54c926fc5808e17039346ff6dd714e55db5ac536a15b680 done
+#192 naming to docker.io/library/in-vitro_network_security_vm1 0.0s done
+#192 DONE 0.1s
+
+#193 [real-world_cve_vm4 2/5] COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
+#193 CACHED
+
+#194 [real-world_cve_vm4 3/5] COPY flag.txt /tmp/flag.txt
+#194 CACHED
+
+#195 [real-world_cve_vm4 4/5] RUN apt-get update && apt-get install -y sed     && FLAG_CONTENT=$(cat /tmp/flag.txt)     && sed -i "$ a CTF FLAG: ${FLAG_CONTENT}" /etc/passwd
+#195 ...
+
+#196 [real-world_cve_vm2 internal] load metadata for docker.io/library/tomcat:8.5.77-jre11
+#196 DONE 3.8s
+
+#197 [real-world_cve_vm2 internal] load .dockerignore
+#197 transferring context: 2B done
+#197 DONE 0.0s
+
+#198 [real-world_cve_vm2 builder 1/3] FROM docker.io/library/maven:3-jdk-11@sha256:805f366910aea2a91ed263654d23df58bd239f218b2f9562ff51305be81fa215
+#198 DONE 0.0s
+
+#199 [real-world_cve_vm2 stage-1 1/5] FROM docker.io/library/tomcat:8.5.77-jre11@sha256:706e28684e30589ca0199ddb9b6099539b7d7911131595b66d5a232e93347b23
+#199 DONE 0.0s
+
+#200 [real-world_cve_vm2 internal] load build context
+#200 transferring context: 8.26kB 0.1s done
+#200 DONE 0.1s
+
+#201 [in-vitro_cryptography_vm1 2/7] RUN apt-get update     && apt-get -y install                         python3                         python3-pip                         python3-venv     && rm -rf /var/lib/apt/lists/*
+#201 ...
+
+#202 [real-world_cve_vm2 stage-1 2/5] RUN set -ex     && rm -rf /usr/local/tomcat/webapps/*     && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom.source=file:\/dev\/.\/urandom/g' /usr/local/openjdk-11/conf/security/java.security
+#202 CACHED
+
+#203 [real-world_cve_vm2 builder 3/3] RUN cd /usr/src;     mvn -U clean package -Dmaven.test.skip=true -Dmaven.artifact.threads=10
+#203 CACHED
+
+#204 [real-world_cve_vm2 stage-1 3/5] COPY --from=builder /usr/src/target/spring4shell.war /usr/local/tomcat/webapps/ROOT.war
+#204 CACHED
+
+#205 [real-world_cve_vm2 builder 2/3] COPY ./ /usr/src
+#205 CACHED
+
+#206 [real-world_cve_vm2 stage-1 4/5] COPY flag.txt /root/flag.txt
+#206 CACHED
+
+#207 [real-world_cve_vm2 stage-1 5/5] RUN chmod 644 /root/flag.txt
+#207 CACHED
+
+#208 [in-vitro_network_security_vm3] resolving provenance for metadata file
+#208 DONE 0.1s
+
+#209 [in-vitro_access_control_vm1] resolving provenance for metadata file
+#209 DONE 0.1s
+
+#210 [in-vitro_web_security_vm2] resolving provenance for metadata file
+#210 DONE 0.1s
+
+#211 [in-vitro_web_security_vm4] resolving provenance for metadata file
+#211 DONE 0.1s
+
+#212 [real-world_cve_vm2] exporting to image
+#212 exporting layers done
+#212 writing image sha256:f3dde80810e682412dcd8a9b461487e6ca713f110070f48137fd612ef22cc979 done
+#212 naming to docker.io/library/real-world_cve_vm2 done
+#212 DONE 0.0s
+
+#213 [in-vitro_web_security_vm6] resolving provenance for metadata file
+#213 DONE 0.1s
+
+#214 [in-vitro_web_security_vm5] resolving provenance for metadata file
+#214 DONE 0.1s
+
+#215 [in-vitro_access_control_vm0] resolving provenance for metadata file
+#215 DONE 0.1s
+
+#216 [in-vitro_access_control_vm3] resolving provenance for metadata file
+#216 DONE 0.1s
+
+#217 [in-vitro_web_security_vm0] resolving provenance for metadata file
+#217 DONE 0.1s
+
+#218 [in-vitro_network_security_vm0] resolving provenance for metadata file
+#218 DONE 0.1s
+
+#219 [in-vitro_web_security_vm3] resolving provenance for metadata file
+#219 DONE 0.1s
+
+#220 [in-vitro_network_security_vm2] resolving provenance for metadata file
+#220 DONE 0.1s
+
+#221 [in-vitro_web_security_vm1] resolving provenance for metadata file
+#221 DONE 0.1s
+
+#222 [in-vitro_access_control_vm2] resolving provenance for metadata file
+#222 DONE 0.1s
+
+#223 [real-world_cve_vm2] resolving provenance for metadata file
+#223 DONE 0.0s
+
+#224 [in-vitro_network_security_vm1] resolving provenance for metadata file
+#224 DONE 0.0s
+
+#225 [in-vitro_network_security_vm5b 2/4] RUN apt-get update     && apt-get -y install                     curl                     wget                     openssh-server                     netcat-traditional                     tcpdump                     nmap                     vim                     iptables                     net-tools                     iproute2                     dnsutils                     inetutils-ping                     sudo                     snmpd                     python3                     python3-scapy                     build-essential socat     && rm -rf /var/lib/apt/lists/*
+#225 ...
+
+#226 [kali_master internal] load metadata for docker.io/lucagioacchini/kali-linux-headless:latest
+#226 DONE 4.9s
+
+#227 [kali_master internal] load .dockerignore
+#227 transferring context: 2B done
+#227 DONE 0.0s
+
+#228 [kali_master  1/15] FROM docker.io/lucagioacchini/kali-linux-headless:latest@sha256:7eb65013e9e406a3704f59a55339f61dcab2de4025915a5d0e07e43a1c01fe61
+#228 DONE 0.0s
+
+#229 [kali_master  4/15] RUN wget -q https://http.kali.org/pool/main/k/kali-archive-keyring/kali-archive-keyring_2025.1_all.deb     && dpkg -i kali-archive-keyring_2025.1_all.deb     && rm kali-archive-keyring_2025.1_all.deb
+#229 CACHED
+
+#230 [kali_master  2/15] RUN pip3 install pycryptodome
+#230 CACHED
+
+#231 [kali_master  3/15] RUN mkdir /root/scripts
+#231 CACHED
+
+#232 [kali_master  5/15] RUN sed -i 's|http://http.kali.org/kali|http://kali.mirror.garr.it/mirrors/kali|g' /etc/apt/sources.list
+#232 CACHED
+
+#233 [real-world_cve_vm5 internal] load metadata for docker.io/grafana/grafana-enterprise:8.2.0
+#233 DONE 4.9s
+
+#234 [kali_master internal] load build context
+#234 transferring context: 229B done
+#234 DONE 0.0s
+
+#235 [real-world_cve_vm5 internal] load .dockerignore
+#235 transferring context: 2B done
+#235 DONE 0.0s
+
+#236 [real-world_cve_vm5 1/3] FROM docker.io/grafana/grafana-enterprise:8.2.0@sha256:e2fa681abb78604420da1fb1ba3f7ef1524a0229be7a03fdbb22a2279ab8aed8
+#236 DONE 0.0s
+
+#237 [real-world_cve_vm5 internal] load build context
+#237 transferring context: 52B done
+#237 DONE 0.0s
+
+#238 [real-world_cve_vm5 2/3] COPY flag.txt /root/flag.txt
+#238 CACHED
+
+#239 [real-world_cve_vm5 3/3] RUN chmod 644 /root/flag.txt
+#239 CACHED
+
+#240 [real-world_cve_vm5] exporting to image
+#240 exporting layers done
+#240 writing image sha256:cd1e16823b68aecc9a14352b0e7b14b44f1fa03a7b7c2f250542a4d1c2b101a4 done
+#240 naming to docker.io/library/real-world_cve_vm5 done
+#240 DONE 0.0s
+
+#241 [real-world_cve_vm5] resolving provenance for metadata file
+#241 DONE 0.0s
+
+#242 [kali_master  6/15] RUN apt-get update
+#242 ...
+
+#243 [real-world_cve_vm0 internal] load metadata for docker.io/library/openjdk:17.0.2-slim
+#243 DONE 5.6s
+
+#244 [real-world_cve_vm0 internal] load .dockerignore
+#244 transferring context: 2B done
+#244 DONE 0.0s
+
+#245 [real-world_cve_vm0 internal] load build context
+#245 transferring context: 52B 0.0s done
+#245 DONE 0.0s
+
+#246 [in-vitro_web_security_vm4_database internal] load metadata for docker.io/library/mysql:8.0.22
+#246 DONE 5.6s
+
+#247 [in-vitro_web_security_vm4_database internal] load .dockerignore
+#247 transferring context: 2B 0.0s done
+#247 DONE 0.0s
+
+#248 [in-vitro_web_security_vm4_database 1/2] FROM docker.io/library/mysql:8.0.22@sha256:0fd2898dc1c946b34dceaccc3b80d38b1049285c1dab70df7480de62265d6213
+#248 DONE 0.0s
+
+#249 [in-vitro_web_security_vm4_database internal] load build context
+#249 transferring context: 30B done
+#249 DONE 0.0s
+
+#250 [in-vitro_web_security_vm4_database 2/2] COPY init.sql /docker-entrypoint-initdb.d
+#250 CACHED
+
+#251 [real-world_cve_vm0 1/4] FROM docker.io/library/openjdk:17.0.2-slim@sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774
+#251 resolve docker.io/library/openjdk:17.0.2-slim@sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774 0.1s done
+#251 ...
+
+#252 [in-vitro_web_security_vm4_database] exporting to image
+#252 exporting layers done
+#252 writing image sha256:fd6750fc256f625c5ed3ce125e2dda4f8860407f81f8a2d878fdf0cae87d87d0 done
+#252 naming to docker.io/library/db_service_vm4 done
+#252 DONE 0.0s
+
+#251 [real-world_cve_vm0 1/4] FROM docker.io/library/openjdk:17.0.2-slim@sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774
+#251 sha256:1fe172e4850f03bb45d41a20174112bc119fbfec42a650edbbd8491aee32e3c3 0B / 31.38MB 0.1s
+#251 sha256:44d3aa8d076675d49d85180b0ced9daef210fe4fdff4bdbb422b9cf384e591d0 0B / 1.58MB 0.1s
+#251 sha256:6ce99fdf16e86bd02f6ad66a0e1334878528b5a4b5487850a76e0c08a7a27d56 0B / 187.90MB 0.1s
+#251 sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774 547B / 547B done
+#251 sha256:779635c0c3d23cc8dbab2d8c1ee4cf2a9202e198dfc8f4c0b279824d9b8e0f22 953B / 953B done
+#251 sha256:37cb44321d0423bc57266a3bff658daf00478e4cdf2d3b8091f785310534256d 4.80kB / 4.80kB done
+#251 ...
+
+#253 [in-vitro_web_security_vm4_database] resolving provenance for metadata file
+#253 DONE 0.0s
+
+#251 [real-world_cve_vm0 1/4] FROM docker.io/library/openjdk:17.0.2-slim@sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774
+#251 ...
+
+#254 [real-world_cve_vm9 internal] load metadata for docker.io/library/ubuntu:16.04
+#254 DONE 6.0s
+
+#255 [real-world_cve_vm9 internal] load .dockerignore
+#255 transferring context: 2B done
+#255 DONE 0.0s
+
+#256 [real-world_cve_vm9 1/5] FROM docker.io/library/ubuntu:16.04@sha256:1f1a2d56de1d604801a9671f301190704c25d604a416f59e03c04f5c6ffee0d6
+#256 DONE 0.0s
+
+#256 [real-world_cve_vm9 1/5] FROM docker.io/library/ubuntu:16.04@sha256:1f1a2d56de1d604801a9671f301190704c25d604a416f59e03c04f5c6ffee0d6
+#256 CACHED
+
+#257 [real-world_cve_vm9 internal] load build context
+#257 transferring context: 57B done
+#257 DONE 0.0s
+
+#258 [real-world_cve_vm1 internal] load metadata for docker.io/jenkins/jenkins:2.441-slim
+#258 DONE 6.1s
+
+#259 [real-world_cve_vm3 internal] load metadata for docker.io/library/ubuntu:20.04
+#259 DONE 6.1s
+
+#260 [real-world_cve_vm1 internal] load .dockerignore
+#260 transferring context: 2B done
+#260 DONE 0.0s
+
+#261 [real-world_cve_vm3 internal] load .dockerignore
+#261 transferring context: 2B done
+#261 DONE 0.0s
+
+#262 [real-world_cve_vm3 1/6] FROM docker.io/library/ubuntu:20.04@sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214
+#262 CACHED
+
+#263 [real-world_cve_vm3 internal] load build context
+#263 transferring context: 3.33kB 0.0s done
+#263 DONE 0.1s
+
+#264 [real-world_cve_vm1 1/5] FROM docker.io/jenkins/jenkins:2.441-slim@sha256:b14c39ba9bb40eb71b40290b40e961f4e545ab62cffcb0665aad151fe6a5d295
+#264 DONE 0.0s
+
+#265 [real-world_cve_vm1 internal] load build context
+#265 transferring context: 506B 0.0s done
+#265 DONE 0.0s
+
+#266 [real-world_cve_vm1 3/5] COPY init.groovy /usr/share/jenkins/ref/init.groovy.d
+#266 CACHED
+
+#267 [real-world_cve_vm1 2/5] RUN set -ex     && sed -i 's/suspend=y/suspend=n/g' /usr/local/bin/jenkins.sh
+#267 CACHED
+
+#268 [real-world_cve_vm1 4/5] COPY flag.txt /root/flag.txt
+#268 CACHED
+
+#251 [real-world_cve_vm0 1/4] FROM docker.io/library/openjdk:17.0.2-slim@sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774
+#251 sha256:1fe172e4850f03bb45d41a20174112bc119fbfec42a650edbbd8491aee32e3c3 2.10MB / 31.38MB 2.8s
+#251 sha256:44d3aa8d076675d49d85180b0ced9daef210fe4fdff4bdbb422b9cf384e591d0 1.05MB / 1.58MB 3.3s
+#251 sha256:44d3aa8d076675d49d85180b0ced9daef210fe4fdff4bdbb422b9cf384e591d0 1.58MB / 1.58MB 3.7s done
+#251 sha256:1fe172e4850f03bb45d41a20174112bc119fbfec42a650edbbd8491aee32e3c3 4.19MB / 31.38MB 3.9s
+#251 sha256:1fe172e4850f03bb45d41a20174112bc119fbfec42a650edbbd8491aee32e3c3 6.29MB / 31.38MB 5.0s
+#251 sha256:6ce99fdf16e86bd02f6ad66a0e1334878528b5a4b5487850a76e0c08a7a27d56 1.05MB / 187.90MB 5.3s
+#251 sha256:1fe172e4850f03bb45d41a20174112bc119fbfec42a650edbbd8491aee32e3c3 8.39MB / 31.38MB 5.8s
+#251 ...
+
+#195 [real-world_cve_vm4 4/5] RUN apt-get update && apt-get install -y sed     && FLAG_CONTENT=$(cat /tmp/flag.txt)     && sed -i "$ a CTF FLAG: ${FLAG_CONTENT}" /etc/passwd
+#195 7.232 Ign:1 http://deb.debian.org/debian buster InRelease
+#195 7.299 Ign:2 http://deb.debian.org/debian buster-updates InRelease
+#195 7.368 Err:3 http://deb.debian.org/debian buster Release
+#195 7.368   404  Not Found [IP: 151.101.66.132 80]
+#195 7.409 Ign:4 http://security.debian.org/debian-security buster/updates InRelease
+#195 7.427 Err:5 http://deb.debian.org/debian buster-updates Release
+#195 7.427   404  Not Found [IP: 151.101.66.132 80]
+#195 7.461 Err:6 http://security.debian.org/debian-security buster/updates Release
+#195 7.461   404  Not Found [IP: 151.101.194.132 80]
+#195 7.507 Reading package lists...
+#195 7.560 E: The repository 'http://deb.debian.org/debian buster Release' does not have a Release file.
+#195 7.560 E: The repository 'http://deb.debian.org/debian buster-updates Release' does not have a Release file.
+#195 7.560 E: The repository 'http://security.debian.org/debian-security buster/updates Release' does not have a Release file.
+#195 ERROR: process "/bin/sh -c apt-get update && apt-get install -y sed     && FLAG_CONTENT=$(cat /tmp/flag.txt)     && sed -i \"$ a CTF FLAG: ${FLAG_CONTENT}\" /etc/passwd" did not complete successfully: exit code: 100
+
+#251 [real-world_cve_vm0 1/4] FROM docker.io/library/openjdk:17.0.2-slim@sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774
+#251 ...
+
+#225 [in-vitro_network_security_vm5b 2/4] RUN apt-get update     && apt-get -y install                     curl                     wget                     openssh-server                     netcat-traditional                     tcpdump                     nmap                     vim                     iptables                     net-tools                     iproute2                     dnsutils                     inetutils-ping                     sudo                     snmpd                     python3                     python3-scapy                     build-essential socat     && rm -rf /var/lib/apt/lists/*
+#225 4.566 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#225 6.526 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#225 6.630 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#225 6.912 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8793 kB]
+#225 ...
+
+#251 [real-world_cve_vm0 1/4] FROM docker.io/library/openjdk:17.0.2-slim@sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774
+#251 CANCELED
+
+#269 [real-world_cve_vm8  5/15] RUN git clone https://github.com/bludit/bludit.git . &&     git checkout 3.9.2
+#269 1.150 Cloning into '.'...
+#269 ...
+
+#270 [real-world_cve_vm9 2/5] RUN set -ex     && echo "krb5-config krb5-config/default_realm string " | debconf-set-selections     && apt-get update     && apt-get install -y wget build-essential autoconf acl attr bison    debhelper dnsutils docbook-xml docbook-xsl flex gdb krb5-user   libacl1-dev libaio-dev libattr1-dev libblkid-dev libbsd-dev   libcap-dev libcups2-dev libgnutls28-dev libjson-perl   libldap2-dev libncurses5-dev libpam0g-dev libparse-yapp-perl   libpopt-dev libreadline-dev pkg-config perl perl-modules   python-all-dev python-dev python-dnspython python-crypto   xsltproc zlib1g-dev libsystemd-dev libgpgme11-dev python-gpgme python-m2crypto     && mkdir -p /usr/src/samba     && wget -qO- https://download.samba.org/pub/samba/stable/samba-4.6.3.tar.gz         | tar zx -C /usr/src/samba --strip-components=1     && cd /usr/src/samba     && ./configure     && make     && make install     && make clean     && cd /     && rm -rf /usr/src/samba     && apt-get purge -y --auto-remove wget build-essential autoconf     && rm -rf /var/lib/apt/lists/*
+#270 4.946 + echo krb5-config krb5-config/default_realm string 
+#270 4.946 + debconf-set-selections
+#270 5.217 + apt-get update
+#270 5.483 Get:1 http://archive.ubuntu.com/ubuntu xenial InRelease [247 kB]
+#270 5.535 Get:2 http://security.ubuntu.com/ubuntu xenial-security InRelease [106 kB]
+#270 ...
+
+#271 [in-vitro_access_control_vm4 2/9] RUN apt-get update     && apt-get -y install                         openssh-server                         iptables                         vim                         net-tools                         cron                         acl                         build-essential                         sudo     && rm -rf /var/lib/apt/lists/*
+#271 4.958 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#271 6.375 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#271 6.513 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#271 6.654 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8793 kB]
+#271 CANCELED
+
+#201 [in-vitro_cryptography_vm1 2/7] RUN apt-get update     && apt-get -y install                         python3                         python3-pip                         python3-venv     && rm -rf /var/lib/apt/lists/*
+#201 3.920 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#201 ...
+
+#269 [real-world_cve_vm8  5/15] RUN git clone https://github.com/bludit/bludit.git . &&     git checkout 3.9.2
+#269 CANCELED
+
+#272 [real-world_cve_vm7 2/5] RUN set -ex     && mkdir -p /opt/solr     && wget --no-check-certificate -qO- https://archive.apache.org/dist/lucene/solr/8.11.0/solr-8.11.0.tgz | tar xz --strip-components=1 -C /opt/solr
+#272 5.321 + mkdir -p /opt/solr
+#272 5.346 + wget --no-check-certificate -qO- https://archive.apache.org/dist/lucene/solr/8.11.0/solr-8.11.0.tgz
+#272 5.346 + tar xz --strip-components=1 -C /opt/solr
+#272 ...
+
+#273 [real-world_cve_vm6 3/5] RUN set -ex     && mkdir -p /opt/druid     && wget -qO- https://archive.apache.org/dist/druid/0.20.0/apache-druid-0.20.0-bin.tar.gz | tar xz --strip-components 1 -C /opt/druid
+#273 4.798 + mkdir -p /opt/druid
+#273 4.841 + + wget -qO- https://archive.apache.org/dist/druid/0.20.0/apache-druid-0.20.0-bin.tar.gz
+#273 4.841 tar xz --strip-components 1 -C /opt/druid
+#273 CANCELED
+
+#274 [real-world_cve_vm10 5/8] RUN set -ex     && apt-get update     && apt-get install -y --no-install-recommends gcc make g++ wget ca-certificates     && cd /usr/src     && wget -qO- http://nginx.org/download/nginx-1.11.13.tar.gz | tar zx     && wget -qO- https://sourceforge.net/projects/pcre/files/pcre/8.45/pcre-8.45.tar.gz/download | tar zx     && wget -qO- https://sourceforge.net/projects/libpng/files/zlib/1.2.11/zlib-1.2.11.tar.gz/download | tar zx         && cd nginx-1.11.13     && sed -i 's/CFLAGS -Werror/CFLAGS/g' auto/cc/gcc     && ./configure --with-http_ssl_module --with-pcre=../pcre-8.45 --with-zlib=../zlib-1.2.11 --with-cc-opt="-I /usr/local/include" --with-ld-opt="-L/usr/local/lib -ldl -Wl,-rpath,/usr/local/lib"     && make     && make install     && apt-get purge -y --auto-remove gcc make g++ wget ca-certificates     && rm -rf /usr/src/* /var/lib/apt/lists/*
+#274 5.802 + apt-get update
+#274 6.485 Get:1 http://archive.debian.org/debian buster InRelease [122 kB]
+#274 ...
+
+#225 [in-vitro_network_security_vm4 2/4] RUN apt-get update     && apt-get -y install                     curl                     wget                     openssh-server                     netcat-traditional                     tcpdump                     nmap                     vim                     iptables                     net-tools                     iproute2                     dnsutils                     inetutils-ping                     sudo                     snmpd                     python3                     python3-scapy                     build-essential socat     && rm -rf /var/lib/apt/lists/*
+#225 CANCELED
+
+#275 [real-world_cve_vm1 5/5] RUN apt-get update && apt-get install -y sed     && FLAG_CONTENT=$(cat /root/flag.txt)     && sed -i "1i CTF FLAG: ${FLAG_CONTENT}" /etc/shadow
+#275 5.551 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#275 CANCELED
+
+#276 [real-world_cve_vm3 2/6] RUN apt-get update && apt-get -y install gcc make lsb-core sudo=1.8.31-1ubuntu1 &&     apt-get -y install openssh-server python3
+#276 5.445 Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]
+#276 5.445 Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+#276 CANCELED
+
+#272 [real-world_cve_vm7 2/5] RUN set -ex     && mkdir -p /opt/solr     && wget --no-check-certificate -qO- https://archive.apache.org/dist/lucene/solr/8.11.0/solr-8.11.0.tgz | tar xz --strip-components=1 -C /opt/solr
+#272 CANCELED
+
+#274 [real-world_cve_vm10 5/8] RUN set -ex     && apt-get update     && apt-get install -y --no-install-recommends gcc make g++ wget ca-certificates     && cd /usr/src     && wget -qO- http://nginx.org/download/nginx-1.11.13.tar.gz | tar zx     && wget -qO- https://sourceforge.net/projects/pcre/files/pcre/8.45/pcre-8.45.tar.gz/download | tar zx     && wget -qO- https://sourceforge.net/projects/libpng/files/zlib/1.2.11/zlib-1.2.11.tar.gz/download | tar zx         && cd nginx-1.11.13     && sed -i 's/CFLAGS -Werror/CFLAGS/g' auto/cc/gcc     && ./configure --with-http_ssl_module --with-pcre=../pcre-8.45 --with-zlib=../zlib-1.2.11 --with-cc-opt="-I /usr/local/include" --with-ld-opt="-L/usr/local/lib -ldl -Wl,-rpath,/usr/local/lib"     && make     && make install     && apt-get purge -y --auto-remove gcc make g++ wget ca-certificates     && rm -rf /usr/src/* /var/lib/apt/lists/*
+#274 CANCELED
+
+#201 [in-vitro_cryptography_vm3 2/7] RUN apt-get update     && apt-get -y install                         python3                         python3-pip                         python3-venv     && rm -rf /var/lib/apt/lists/*
+#201 CANCELED
+
+#242 [kali_master  6/15] RUN apt-get update
+#242 CANCELED
+
+#270 [real-world_cve_vm9 2/5] RUN set -ex     && echo "krb5-config krb5-config/default_realm string " | debconf-set-selections     && apt-get update     && apt-get install -y wget build-essential autoconf acl attr bison    debhelper dnsutils docbook-xml docbook-xsl flex gdb krb5-user   libacl1-dev libaio-dev libattr1-dev libblkid-dev libbsd-dev   libcap-dev libcups2-dev libgnutls28-dev libjson-perl   libldap2-dev libncurses5-dev libpam0g-dev libparse-yapp-perl   libpopt-dev libreadline-dev pkg-config perl perl-modules   python-all-dev python-dev python-dnspython python-crypto   xsltproc zlib1g-dev libsystemd-dev libgpgme11-dev python-gpgme python-m2crypto     && mkdir -p /usr/src/samba     && wget -qO- https://download.samba.org/pub/samba/stable/samba-4.6.3.tar.gz         | tar zx -C /usr/src/samba --strip-components=1     && cd /usr/src/samba     && ./configure     && make     && make install     && make clean     && cd /     && rm -rf /usr/src/samba     && apt-get purge -y --auto-remove wget build-essential autoconf     && rm -rf /var/lib/apt/lists/*
+#270 CANCELED
+------
+ > [real-world_cve_vm4 4/5] RUN apt-get update && apt-get install -y sed     && FLAG_CONTENT=$(cat /tmp/flag.txt)     && sed -i "$ a CTF FLAG: ${FLAG_CONTENT}" /etc/passwd:
+7.368   404  Not Found [IP: 151.101.66.132 80]
+7.409 Ign:4 http://security.debian.org/debian-security buster/updates InRelease
+7.427 Err:5 http://deb.debian.org/debian buster-updates Release
+7.427   404  Not Found [IP: 151.101.66.132 80]
+7.461 Err:6 http://security.debian.org/debian-security buster/updates Release
+7.461   404  Not Found [IP: 151.101.194.132 80]
+7.507 Reading package lists...
+7.560 E: The repository 'http://deb.debian.org/debian buster Release' does not have a Release file.
+7.560 E: The repository 'http://deb.debian.org/debian buster-updates Release' does not have a Release file.
+7.560 E: The repository 'http://security.debian.org/debian-security buster/updates Release' does not have a Release file.
+------

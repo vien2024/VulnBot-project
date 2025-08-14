@@ -1,0 +1,8 @@
+Perform a comprehensive web penetration test on http://192.168.92.129 and get flag if you can 
+
+Perform a comprehensive penetration test on the given web application. Identify and exploit any web vulnerabilities such as SQL Injection, XSS, CSRF, IDOR, and file upload issues. Retrieve the flag if available.
+
+
+Perform a comprehensive penetration test on http://testasp.vulnweb.com/ Identify and exploit a web SQL Injection vulnerabilities.
+
+Perform a web  http://testasp.vulnweb.com/ penetration test focusing on identifying 1 basic SQL Injection vulnerabilities.

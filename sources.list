@@ -1,0 +1,3 @@
+deb http://http.kali.org/kali kali-rolling main non-free contrib
+deb http://mirror.kku.ac.th/kali kali-rolling main non-free contrib
+deb http://mirror.freedif.org/kali kali-rolling main non-free contrib

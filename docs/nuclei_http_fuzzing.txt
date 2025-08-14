@@ -1,0 +1,674 @@
+HTTP Fuzzing
+Fuzzing Overview
+Learn about fuzzing HTTP requests with Nuclei
+
+Nuclei supports fuzzing of HTTP requests based on rules defined in the fuzzing section of the HTTP request. This allows creating templates for generic Web Application vulnerabilities like SQLi, SSRF, CMDi, etc without any information of the target like a classic web fuzzer. We call this concept as Fuzzing for Unknown Vulnerabilities.
+
+​
+pre-condition
+More often than not, we want to only attempt fuzzing on those requests where it makes sense. For example,
+
+Fuzz Body When Body is Present
+Ignore PreFlight and CONNECT requests
+and so on. With Nuclei v3.2.4 we have introduced a new pre-condition section which contains conditions when the fuzzing template should be executed.
+
+pre-condition can be considered a twin of matchers in nuclei. They support all matcher types, including DSL, and the only difference is that this serves a different purpose.
+
+For example, to only execute template on POST request with some body, you can use the following filter.
+
+
+Copy
+- pre-condition:
+    - type: dsl
+      dsl:
+        - method == POST
+        - len(body) > 0
+      condition: and
+Currently, Only request data like header, host, input, method, path, etc is available, but soon, response data will be available once the support for loading the response along with the request is added.
+When writing/executing a template, you can use the -v -svd flags to see all variables available in filters before applying the filter.
+
+​
+Part
+Part specifies what part of the request should be fuzzed based on the specified rules. Available options for this parameter are -
+
+query (default) - fuzz query parameters for URL
+
+
+Copy
+fuzzing:
+  - part: query # fuzz parameters in URL query
+path - fuzz path parameters for requests
+
+
+Copy
+fuzzing:
+  - part: path # fuzz path parameters
+header - fuzz header parameters for requests
+
+
+Copy
+fuzzing:
+  - part: header # fuzz headers
+cookie - fuzz cookie parameters for requests
+
+
+Copy
+fuzzing:
+  - part: cookie # fuzz cookies
+body - fuzz body parameters for requests
+
+
+Copy
+fuzzing:
+  - part: body # fuzz parameters in body
+​
+Special Part
+request - fuzz the entire request (all parts mentioned above)
+
+
+Copy
+fuzzing:
+  - part: request # fuzz entire request
+​
+Multiple selective parts
+Multiple parts can be selected for fuzzing by defining a parts field which is the plural of above allowing selected multiple parts to be fuzzed.
+
+
+Copy
+fuzzing:
+  - parts:
+      - query
+      - body
+      - header
+​
+Type
+Type specifies the type of replacement to perform for the fuzzing rule value. Available options for this parameter are -
+
+replace (default) - replace the value with payload
+prefix - prefix the value with payload
+postfix - postfix the value with payload
+infix - infix the value with payload (place in between)
+replace-regex - replace the value with payload using regex
+
+Copy
+fuzzing:
+  - part: query
+    type: postfix # Fuzz query and postfix payload to params
+​
+Key-Value Abstraction
+In a HTTP request, there are various parts like query, path, headers, cookies, and body and each part has different in various formats. For example, the query part is a key-value pair, the path part is a list of values, the body part can be a JSON, XML, or form-data.
+
+To effectively abstract these parts and allow them to be fuzzed, Nuclei exposes these values as key and value pairs. This allows users to fuzz based on the key or value of the request part.
+
+For example, Below sample HTTP request can be abstracted as key-value pairs as shown below.
+
+
+Copy
+POST /reset-password?token=x0x0x0&source=app HTTP/1.1
+Host: 127.0.0.1:8082
+User-Agent: Go-http-client/1.1
+Cookie: PHPSESSID=1234567890
+Content-Length: 23
+Content-Type: application/json
+Accept-Encoding: gzip
+Connection: close
+
+{"password":"12345678"}
+part: Query
+key	value
+token	x0x0x0
+source	app
+part: Path
+key	value
+value	/reset-password
+part: Header
+key	value
+Host	127.0.0.1:8082
+User-Agent	Go-http-client/1.1
+Content-Length	23
+Content-Type	application/json
+Accept-Encoding	gzip
+Connection	close
+part: Cookie
+key	value
+PHPSESSID	1234567890
+part: Body
+key	value
+password	12345678
+Note: XML, JSON, Form, Multipart-FormData will be in kv format, but if the Body is binary or in any other format, the entire Body will be represented as a single key-value pair with key as value and value as the entire Body.
+
+key	value
+value	”\x08\x96\x01\x12\x07\x74”
+This abstraction really levels up the game since you only need to write a single rule for the Body, and it will be applied to all formats. For example, if you check for SQLi in body values, a single rule will work on all formats, i.e., JSON, XML, Form, Multipart-FormData, etc.
+
+​
+Mode
+Mode specifies the mode in which to perform the replacements. Available modes are -
+
+multiple (default) - replace all values at once
+single - replace one value at a time
+
+Copy
+fuzzing:
+  - part: query
+    type: postfix
+    mode: multiple # Fuzz query postfixing payloads to all parameters at once
+Note: default values are set/used when other options are not defined.
+
+​
+Component Data Filtering
+Multiple filters are supported to restrict the scope of fuzzing to only interesting parameter keys and values. Nuclei HTTP Fuzzing engine converts request parts into Keys and Values which then can be filtered by their related options.
+
+The following filter fields are supported -
+
+keys - list of parameter names to fuzz (exact match)
+keys-regex - list of parameter regex to fuzz
+values - list of value regex to fuzz
+These filters can be used in combination to run highly targeted fuzzing based on the parameter input. A few examples of such filtering are provided below.
+
+
+Copy
+# fuzzing command injection based on parameter name value
+fuzzing:
+  - part: query
+    type: replace
+    mode: single
+    keys:
+      - "daemon"
+      - "upload"
+      - "dir"
+      - "execute"
+      - "download"
+      - "log"
+      - "ip"
+      - "cli"
+      - "cmd"
+
+Copy
+# fuzzing openredirects based on parameter name regex
+fuzzing:
+  - part: query
+    type: replace
+    mode: single
+    keys-regex:
+      - "redirect.*"
+
+Copy
+# fuzzing ssrf based on parameter value regex
+fuzzing:
+  - part: query
+    type: replace
+    mode: single
+    values:
+      - "https?://.*"
+​
+Fuzz
+Fuzz specifies the values to replace with a type for a parameter. It supports payloads, DSL functions, etc and allows users to fully utilize the existing nuclei feature-set for fuzzing purposes.
+
+
+Copy
+# fuzz section for xss fuzzing with stop-at-first-match
+payloads:
+  reflection:
+    - "6842'\"><9967"
+stop-at-first-match: true
+fuzzing:
+  - part: query
+    type: postfix
+    mode: single
+    fuzz:
+      - "{{reflection}}"
+
+Copy
+# using interactsh-url placeholder for oob testing
+payloads:
+  redirect:
+    - "{{interactsh-url}}"
+fuzzing:
+  - part: query
+    type: replace
+    mode: single
+    keys:
+      - "dest"
+      - "redirect"
+      - "uri"
+    fuzz:
+      - "https://{{redirect}}"
+
+Copy
+# using template-level variables for SSTI testing
+variables:
+  first: "{{rand_int(10000, 99999)}}"
+  second: "{{rand_int(10000, 99999)}}"
+  result: "{{to_number(first)*to_number(second)}}"
+
+http:
+    ...
+    payloads:
+      reflection:
+        - '{{concat("{{", "§first§*§second§", "}}")}}'
+    fuzzing:
+      - part: query
+        type: postfix
+        mode: multiple
+        fuzz:
+          - "{{reflection}}"
+​
+Analyzer
+Analyzers is a new concept introduced in nuclei fuzzing which allow the engine to make additional verification requests based on a certain logic to verify the vulnerability.
+
+​
+time_delay
+The time_delay analyzer verifies that the response time of the request is controllable by the fuzzed payload. It uses a Linear Regression algorithm ported from ZAP with alternating requests to determine the server time is actually controllable rather than just noise. You can configure it like so
+
+
+Copy
+# Create a new time delay analyzer
+analyzer:
+  name: time_delay
+  # Optionally, you can define parameters for the
+  # analyzer like below.
+  # 
+  # the defaults are good enough for most use cases. 
+  parameters:
+    sleep_duration: 10 # sleep for 10 seconds (default: 5)
+    requests_limit: 6 # make 6 verification requests (default: 4)
+    time_correlation_error_range: 0.30 # error range for time correlation (default: 0.15)
+    time_slope_error_range: 0.40 # error range for time slope (default: 0.30)
+The following dynamic placeholders are available in payloads with time_delay analyzer.
+
+[SLEEPTIME] - The sleep time in seconds for the time delay analyzer.
+[INFERENCE] - The inference condition (%d=%d) for the time delay analyzer.
+These values are substituted at runtime with the actual values for the analyzer. The following is how a usual verification process looks.
+
+Send the request with the payload to the target with 5 second delay.
+If the response time is less than 5, do nothing.
+Send the request to the analyzer which queues it with 5 seconds delay.
+Next a 1 second delay
+Next a 5 second delay
+Finally, the last 1 second delay.
+If the response time is controllable, the analyzer will report the vulnerability.
+
+Matching for the analyzer matches is pretty straightforward as well. Simiar to interactsh, you can use part: analyzer to match the analyzer response.
+
+
+Copy
+matchers:
+  - type: word
+    part: analyzer
+    words:
+      - "true"
+Optionally, you can also extract the analyzer_details from the analyzer for matches.
+
+​
+Example Fuzzing template
+An example sample template for fuzzing XSS vulnerabilities is provided below.
+
+
+Copy
+id: fuzz-reflection-xss
+
+info:
+  name: Basic Reflection Potential XSS Detection
+  author: pdteam
+  severity: low
+
+http:
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "GET"'       # only run if method is GET
+    payloads:
+      reflection:
+        - "6842'\"><9967"
+
+    stop-at-first-match: true
+    fuzzing:
+      - part: query
+        type: postfix
+        mode: single
+        fuzz:
+          - "{{reflection}}"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "{{reflection}}"
+
+      - type: word
+        part: header
+        words:
+          - "text/html"
+HTTP Fuzzing
+Fuzzing Examples
+Review some examples of fuzzing with Nuclei
+
+​
+Basic SSTI Template
+A simple template to discover {{<number>*<number>}} type SSTI vulnerabilities.
+
+
+Copy
+id: fuzz-reflection-ssti
+
+info:
+  name: Basic Reflection Potential SSTI Detection
+  author: pdteam
+  severity: low
+
+variables:
+  first: "{{rand_int(10000, 99999)}}"
+  second: "{{rand_int(10000, 99999)}}"
+  result: "{{to_number(first)*to_number(second)}}"
+
+http:
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "GET"'       # only run on GET URLs
+
+    payloads:
+      reflection:
+        - '{{concat("{{", "§first§*§second§", "}}")}}'
+
+    fuzzing:
+      - part: query
+        type: postfix
+        mode: multiple
+        fuzz:
+          - "{{reflection}}"
+
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "{{result}}"
+​
+Blind Time Based SQLi Template
+A template to detect blind time based SQLi with a time delay analyzer.
+
+
+Copy
+id: mysql-blind-time-based-sqli
+
+info:
+  name: MySQL SQLi - Blind Time based
+  author: pdteam
+  severity: critical
+  reference:
+    - https://github.com/zaproxy/zap-extensions/blob/main/addOns/ascanrules/src/main/java/org/zaproxy/zap/extension/ascanrules/SqlInjectionMySqlScanRule.java
+
+http:
+  - payloads:
+      injections:
+        low:
+          - " / sleep([SLEEPTIME]) "
+          - "' / sleep([SLEEPTIME]) / '"
+          - "\" / sleep([SLEEPTIME]) / \""
+        medium:
+          - " and 0 in (select sleep([SLEEPTIME]) ) -- "
+          - "' and 0 in (select sleep([SLEEPTIME]) ) -- "
+          - "\" and 0 in (select sleep([SLEEPTIME]) ) -- "
+          - " where 0 in (select sleep([SLEEPTIME]) ) -- "
+          - "' where 0 in (select sleep([SLEEPTIME]) ) -- "
+          - "\" where 0 in (select sleep([SLEEPTIME]) ) -- "
+        high:
+          - "\" where 0 in (select sleep([SLEEPTIME]) ) and \"\"=\""
+          - " and 0 in (select sleep([SLEEPTIME]) ) "
+          - "' and 0 in (select sleep([SLEEPTIME]) ) and ''='"
+          - "\" and 0 in (select sleep([SLEEPTIME]) ) and \"\"=\""
+          
+    attack: pitchfork
+    analyzer:
+      name: time_delay
+        
+    fuzzing:
+      - part: request # fuzz all the request parts.
+        type: postfix
+        mode: single
+        fuzz:
+          - "{{injections}}"
+          
+    stop-at-first-match: true
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: analyzer
+        words:
+          - "true"
+​
+Basic XSS Template
+A simple template to discover XSS probe reflection in HTML pages.
+
+
+Copy
+id: fuzz-reflection-xss
+
+info:
+  name: Basic Reflection Potential XSS Detection
+  author: pdteam
+  severity: low
+
+http:
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "GET"'       # only run on GET URLs
+
+    payloads:
+      reflection:
+        - "6842'\"><9967"
+
+    stop-at-first-match: true
+    fuzzing:
+      - part: query
+        type: postfix
+        mode: single
+        fuzz:
+          - "{{reflection}}"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "{{reflection}}"
+
+      - type: word
+        part: header
+        words:
+          - "text/html"
+​
+Basic OpenRedirect Template
+A simple template to discover open-redirects issues.
+
+
+Copy
+id: fuzz-open-redirect
+
+info:
+  name: Basic Open Redirect Detection
+  author: pdteam
+  severity: low
+
+http:
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "GET"'       # only run on GET URLs
+
+    payloads:
+      redirect:
+        - "https://example.com"
+
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        keys-regex:
+          - "redirect.*"
+        fuzz:
+          - "{{redirect}}"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: header
+        words:
+          - "{{redirect}}"
+
+      - type: status
+        status:
+          - 301
+          - 302
+          - 307
+​
+Basic Path Based SQLi
+A example template to discover path-based SQLi issues.
+
+
+Copy
+http:
+    # pre-condition to determine if the template should be executed
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "POST"'       # only run if method is POST
+          - 'contains(path,"reset")' # only run if path contains reset word
+        condition: and
+
+    # fuzzing rules
+    fuzzing:
+      - part: header # This rule will be applied to the header
+        type: replace # replace the type of rule (i.e., existing values will be replaced with payload)
+        mode: multiple # multiple mode (i.e., all existing values will be replaced/used at once)
+        fuzz:
+          X-Forwarded-For: "{{domain}}"  # here {{domain}} is attacker-controlled server
+          X-Forwarded-Host: "{{domain}}"
+          Forwarded: "{{domain}}"
+          X-Real-IP: "{{domain}}"
+          X-Original-URL: "{{domain}}"
+          X-Rewrite-URL: "{{domain}}"
+          Host: "{{domain}}"
+​
+Basic Host Header Injection
+A simple template to discover host header injection issues.
+
+
+Copy
+http:
+    # pre-condition to determine if the template should be executed
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "POST"'       # only run if method is POST
+          - 'contains(path,"reset")' # only run if path contains reset word
+        condition: and
+
+    # fuzzing rules
+    fuzzing:
+      - part: header # This rule will be applied to the header
+        type: replace # replace the type of rule (i.e., existing values will be replaced with payload)
+        mode: multiple # multiple mode (i.e., all existing values will be replaced/used at once)
+        fuzz:
+          X-Forwarded-For: "{{domain}}"  # here {{domain}} is attacker-controlled server
+          X-Forwarded-Host: "{{domain}}"
+          Forwarded: "{{domain}}"
+          X-Real-IP: "{{domain}}"
+          X-Original-URL: "{{domain}}"
+          X-Rewrite-URL: "{{domain}}"
+          Host: "{{domain}}"
+​
+Blind SSRF OOB Detection
+A simple template to detect Blind SSRF in known-parameters using interactsh with HTTP fuzzing.
+
+
+Copy
+id: fuzz-ssrf
+
+info:
+  name: Basic Blind SSRF Detection
+  author: pdteam
+  severity: low
+
+http:
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "GET"'       # only run on GET URLs
+
+    payloads:
+      redirect:
+        - "{{interactsh-url}}"
+
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        keys:
+          - "dest"
+          - "redirect"
+          - "uri"
+          - "path"
+          - "continue"
+          - "url"
+          - "window"
+          - "next"
+          - "data"
+          - "reference"
+          - "site"
+          - "html"
+          - "val"
+          - "validate"
+          - "domain"
+          - "callback"
+          - "return"
+          - "page"
+          - "feed"
+          - "host"
+          - "port"
+          - "to"
+          - "out"
+          - "view"
+          - "dir"
+          - "show"
+          - "navigation"
+          - "open"
+        fuzz:
+          - "https://{{redirect}}"
+
+    matchers:
+      - type: word
+        part: interactsh_protocol  # Confirms the DNS Interaction
+        words:
+          - "http"
+​
+Blind CMDi OOB based detection
+A simple template to detect blind CMDI using interactsh
+
+
+Copy
+id: fuzz-cmdi
+
+info:
+  name: Basic Blind CMDI Detection
+  author: pdteam
+  severity: low
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    payloads:
+      redirect:
+        - "{{interactsh-url}}"
+    fuzzing:
+        fuzz:
+          - "nslookup {{redirect}}"
+    matchers:
+      - type: word
+        part: interactsh_protocol  # Confirms the DNS Interaction
+        words:
+          - "dns"

