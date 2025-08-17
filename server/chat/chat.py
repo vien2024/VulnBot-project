@@ -24,7 +24,7 @@ from db.repository.message_repository import (
     add_message_to_db,
 )
 from rag.kb.api.kb_doc_api import search_docs
-from rag.kb.api.kb_online_api import search_with_context
+from rag.kb.api.kb_online_api import query_rag_all_collections, search_with_context
 from rag.reranker.reranker import LangchainReranker
 from server.utils.utils import LLMType, replace_ip_with_targetip
 from utils.log_common import build_logger
@@ -32,8 +32,6 @@ from utils.log_common import build_logger
 
 
 logger = build_logger()
-URI = "https://in03-56a0c941e.serverless.aws-eu-central-1.cloud.zilliz.com"
-TOKEN = "f0cef636066c8653aa07cf9b435a2faf18dcb7a1e13a19a8c61c11b786f8a49d61c6a7d9d8837844c0b78"
 
 class OpenAIChat(ABC):
     def __init__(self, config):
@@ -203,7 +201,12 @@ def _chat(query: str, kb_name=None, conversation_id=None, kb_query=None, summary
             #    )
             #)
 
-            docs = search_with_context(kb_query)
+            #docs = search_with_context(kb_query)
+            print(f"---------kb query {kb_query}-----------")
+            docs = query_rag_all_collections(
+                query=kb_query,
+                context_window=3,
+            )
             reranker_model = LangchainReranker(
                 top_n=Configs.kb_config.top_n,
                 name_or_path=Configs.llm_config.rerank_model,
@@ -226,7 +229,7 @@ def _chat(query: str, kb_name=None, conversation_id=None, kb_query=None, summary
         if conversation_id is not None and len(query) > 10000:
             query = query[:10000]
         else:
-            query = query[: Configs.llm_config.context_length]
+            query = query[:Configs.llm_config.context_length]
 
         flag = False
 

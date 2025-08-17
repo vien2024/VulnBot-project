@@ -1,3 +1,4 @@
+from typing import List
 from pymilvus import MilvusClient, DataType
 from sentence_transformers import SentenceTransformer
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -159,3 +160,103 @@ def process_pdf(pdf_path, book_title):
     } for i, (chunk, emb) in enumerate(zip(chunks, embeddings))]
     client.insert(book_collection, data)
     return book_collection
+
+def query_rag_all_collections(
+    query: str,
+    filter_str: str = "",
+    limit: int = 3,
+    context_window: int = 2,
+) -> List[Document]:
+    """
+    Search across ALL Milvus collections using RAG with context.
+    For each match, retrieves neighboring chunks for richer context.
+    Returns a list of LangChain Document-like objects.
+    """
+    embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+    client = create_milvus_client(URI, TOKEN)
+
+    # 1. Encode the query
+    try:
+        query_embedding = embedding_model.encode([query], convert_to_tensor=False).tolist()
+    except Exception as e:
+        raise RuntimeError(f"Failed to encode query: {str(e)}")
+
+    # 2. Get all collections
+    try:
+        collections = client.list_collections()
+    except Exception as e:
+        raise RuntimeError(f"Failed to list collections: {str(e)}")
+
+    retrieved_docs = []
+
+    for collection_name in collections:
+        print(f"🔍 Searching in collection: {collection_name}")
+
+        try:
+            results = client.search(
+                collection_name=collection_name,
+                data=query_embedding,
+                anns_field="embedding",
+                filter=filter_str,
+                limit=limit,
+                output_fields=["text", "source_path", "file_type", "chunk_idx", "doc_id"],
+                search_params={"metric_type": "COSINE", "params": {"nprobe": 16}}
+            )
+        except Exception as e:
+            try:
+                print(f"📦 Loading collection: {collection_name}")
+                client.load_collection(collection_name)
+                results = client.search(
+                    collection_name=collection_name,
+                    data=query_embedding,
+                    anns_field="embedding",
+                    filter=filter_str,
+                    limit=limit,
+                    output_fields=["text", "source_path", "file_type", "chunk_idx", "doc_id"],
+                    search_params={"metric_type": "COSINE", "params": {"nprobe": 16}}
+                )
+            except Exception as load_error:
+                print(f"❌ Failed to search in {collection_name}: {str(load_error)}")
+                continue
+
+        for hits in results:
+            for hit in hits:
+                try:
+                    # FIX: Access fields directly from the hit object, not a sub-object
+                    doc_id = hit["entity"]["doc_id"]
+                    chunk_idx = hit["entity"]["chunk_idx"]
+                    source_path = hit["entity"]["source_path"]
+                    file_type = hit["entity"]["file_type"]
+
+                    start_idx = max(0, chunk_idx - context_window)
+                    end_idx = chunk_idx + context_window
+
+                    expr = f'doc_id == "{doc_id}" and chunk_idx >= {start_idx} and chunk_idx <= {end_idx}'
+                    # FIX: Renamed filter=expr to expr=expr in client.query
+                    context_chunks = client.query(
+                        collection_name=collection_name,
+                        filter=expr,
+                        output_fields=["chunk_idx", "text"]
+                    )
+
+                    context_chunks.sort(key=lambda x: x['chunk_idx'])
+                    full_context = "\n\n".join([chunk['text'] for chunk in context_chunks])
+
+                    metadata = {
+                        "source_collection": collection_name,
+                        "source_path": source_path,
+                        "file_type": file_type,
+                        "chunk_position": f"{chunk_idx + 1}/{context_chunks[-1]['chunk_idx'] + 1 if context_chunks else '?'}",
+                        "total_context_chunks": len(context_chunks)
+                    }
+
+                    doc = Document(
+                        page_content=full_context,
+                        metadata=metadata
+                    )
+                    retrieved_docs.append(doc)
+
+                except Exception as e:
+                    print(f"⚠️ Error processing hit in {collection_name}: {str(e)}")
+                    continue
+    return retrieved_docs
